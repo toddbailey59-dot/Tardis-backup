@@ -20,6 +20,8 @@ Regenerate the GIF and static frame:
 Frame PNGs are cached in `~/.local/share/tardis-fastfetch/frames` and rebuilt
 automatically if missing. The text is drawn once; each frame is drawn as a new
 Kitty image and the previous image is deleted, so the screen does not flicker.
+Graphics replies are suppressed with `q=2`, so no `i=…;OK` text leaks into the
+terminal.
 
 Outside Kitty, or when fastfetch is called with arguments, the real
 `/usr/bin/fastfetch` runs normally.

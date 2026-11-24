@@ -39,11 +39,11 @@ idx=0
 for n in $(seq -w 1 "$frame_count"); do
     printf '\033[H'
     id=$((4200 + idx))
-    printf '\033_Ga=T,f=100,t=f,c=%s,r=%s,i=%s;%s\033\\' \
+    printf '\033_Ga=T,f=100,t=f,q=2,c=%s,r=%s,i=%s;%s\033\\' \
         "$COLS" "$ROWS" "$id" \
         "$(printf '%s' "$FRAME_DIR/frame-$n.png" | base64 -w 0)"
     if [ -n "$prev" ]; then
-        printf '\033_Ga=d,d=I,i=%s\033\\' "$prev"
+        printf '\033_Ga=d,d=I,i=%s,q=2\033\\' "$prev"
     fi
     prev="$id"
     idx=$((idx + 1))
