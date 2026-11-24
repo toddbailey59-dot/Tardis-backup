@@ -1,0 +1,16 @@
+#!/bin/bash
+# Rebuild the animated gold TARDIS logo used by fastfetch.
+# Source art: ~/.config/fastfetch/tardis.png
+set -euo pipefail
+
+DIR="$HOME/.config/fastfetch"
+SRC="$DIR/tardis.png"
+OUT="$DIR/tardis-gold.gif"
+
+[ -f "$SRC" ] || { echo "Missing source art: $SRC" >&2; exit 1; }
+
+ffmpeg -hide_banner -loglevel error -y -loop 1 -i "$SRC" \
+    -vf "scale=480:672:force_original_aspect_ratio=decrease,pad=480:672:(ow-iw)/2:(oh-ih)/2:color=0x0a1424,hue=s=0,colorchannelmixer=rr=0.70:rg=0.55:rb=0.20:gr=0.50:gg=0.40:gb=0.10:br=0.15:bg=0.12:bb=0.04,eq=contrast=1.12:brightness='0.015+0.02*sin(2*PI*t/1.5)',rotate=a='0.035*sin(2*PI*t/3)':ow=iw:oh=ih:fillcolor=0x0a1424,fps=12" \
+    -frames:v 36 -loop 0 "$OUT"
+
+echo "Wrote $OUT"

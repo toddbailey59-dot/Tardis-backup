@@ -30,6 +30,7 @@ mkdir -p \
     "$REPO/config/code-user" \
     "$REPO/config/vscode-theme" \
     "$REPO/config/kitty" \
+    "$REPO/config/fastfetch" \
     "$REPO/config/qt6ct" \
     "$REPO/config/opencode" \
     "$REPO/config/local-ai" \
@@ -87,6 +88,11 @@ cp -a "$SRC/.vscode-oss/extensions/doctor.tardis-theme-0.0.1/." "$REPO/config/vs
 
 # Kitty terminal config
 cp -a "$SRC/.config/kitty/kitty.conf" "$REPO/config/kitty/" 2>/dev/null || true
+
+# fastfetch config and animated TARDIS logo (rebuild with bin/tardis-fastfetch-logo)
+for f in config.jsonc README.md tardis.png tardis-gold.gif; do
+    cp -a "$SRC/.config/fastfetch/$f" "$REPO/config/fastfetch/" 2>/dev/null || true
+done
 
 # Qt appearance (the Papirus icon data itself is restored by bin/tardis-icons)
 cp -a "$SRC/.config/qt6ct/qt6ct.conf" "$REPO/config/qt6ct/" 2>/dev/null || true

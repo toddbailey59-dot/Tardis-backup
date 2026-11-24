@@ -1,0 +1,45 @@
+{
+    "$schema": "https://raw.githubusercontent.com/fastfetch/fastfetch/dev/doc/json_schema.json",
+    "logo": {
+        "type": "kitty",
+        "source": "/home/doctor/.config/fastfetch/tardis-gold.gif",
+        "width": 40,
+        "height": 28,
+        "animationFrame": 0,
+        "padding": {
+            "right": 2,
+            "top": 1
+        }
+    },
+    "display": {
+        "separator": " → ",
+        "color": {
+            "keys": "94",
+            "title": "36"
+        }
+    },
+    "modules": [
+        { "type": "title", "key": "╭" },
+        { "type": "os", "key": "├ OS" },
+        { "type": "kernel", "key": "├ Kernel" },
+        { "type": "host", "key": "├ Host" },
+        { "type": "uptime", "key": "├ Uptime" },
+        { "type": "packages", "key": "├ Packages" },
+        { "type": "shell", "key": "├ Shell" },
+        { "type": "terminal", "key": "├ Terminal" },
+        { "type": "wm", "key": "├ WM" },
+        { "type": "cpu", "key": "├ CPU" },
+        { "type": "gpu", "key": "├ GPU" },
+        { "type": "display", "key": "├ Resolution" },
+        { "type": "memory", "key": "├ Memory" },
+        { "type": "disk", "key": "├ Disk" },
+        { "type": "publicip", "key": "├ Public Ip" },
+        { "type": "localip", "key": "├ Local Ip" },
+        {
+            "type": "colors",
+            "symbol": "circle",
+            "key": "╰ TARDIS"
+        }
+
+    ]
+}

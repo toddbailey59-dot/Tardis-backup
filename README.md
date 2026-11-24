@@ -15,6 +15,7 @@ Git-backed snapshot of the TARDIS desktop configuration.
 - `config/code-user/` — VS Code user settings
 - `config/vscode-theme/` — custom TARDIS Dark theme
 - `config/kitty/` — Kitty terminal config
+- `config/fastfetch/` — fastfetch config, source art and animated gold TARDIS logo
 - `config/qt6ct/` — Qt appearance config
 - `docs/` — research notes, local AI, Open WebUI and morning brief guides
 - `wallpapers/README.md` — wallpaper pair documentation
