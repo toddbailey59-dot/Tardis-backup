@@ -1,0 +1,67 @@
+#!/bin/bash
+# Install, test, or restore the TARDIS Gold SDDM theme.
+set -euo pipefail
+
+INVOKER="${SUDO_USER:-${PKEXEC_UID:-$(id -un)}}"
+INVOKER_HOME="$(getent passwd "$INVOKER" | cut -d: -f6)"
+SRC="${INVOKER_HOME:-$HOME}/.local/share/sddm/themes/tardis-gold"
+DST="/usr/share/sddm/themes/tardis-gold"
+CONF="/etc/sddm.conf.d/99-tardis.conf"
+
+usage() {
+    cat <<'EOF'
+Usage: tardis-sddm {status|test|install|restore}
+
+  status    Show the installed/active theme state
+  test      Preview the theme in a greeter window (no root needed)
+  install   Install system-wide and select it for the next login (sudo)
+  restore   Remove the SDDM selection override (sudo)
+EOF
+}
+
+case "${1:-status}" in
+    status)
+        echo "Source theme: $SRC"
+        if [ -f "$SRC/metadata.desktop" ]; then
+            echo "Source theme found: yes"
+        else
+            echo "Source theme found: no"
+        fi
+        echo "Installed theme: $DST"
+        if [ -f "$DST/metadata.desktop" ]; then
+            echo "Installed theme found: yes"
+        else
+            echo "Installed theme found: no"
+        fi
+        echo "Selection override: $CONF"
+        if [ -r "$CONF" ]; then
+            grep -E '^Current=' "$CONF" || echo "No Current= entry"
+        else
+            echo "Not present"
+        fi
+        ;;
+    test)
+        [ -f "$SRC/metadata.desktop" ] || { echo "Missing theme: $SRC" >&2; exit 1; }
+        exec /usr/bin/sddm-greeter-qt6 --test-mode --theme "$SRC"
+        ;;
+    install)
+        [ -f "$SRC/metadata.desktop" ] || { echo "Missing theme: $SRC" >&2; exit 1; }
+        sudo install -d -m 755 /usr/share/sddm/themes
+        sudo install -d -m 755 "$DST"
+        sudo cp -a "$SRC/." "$DST/"
+        sudo install -d -m 755 /etc/sddm.conf.d
+        printf '[Theme]\nCurrent=tardis-gold\n' | sudo tee "$CONF" >/dev/null
+        echo "Installed TARDIS Gold. It will be used at the next login."
+        ;;
+    restore)
+        sudo rm -f "$CONF"
+        echo "Removed $CONF. SDDM will use its previous/default theme at next login."
+        ;;
+    -h|--help|help)
+        usage
+        ;;
+    *)
+        usage >&2
+        exit 2
+        ;;
+esac

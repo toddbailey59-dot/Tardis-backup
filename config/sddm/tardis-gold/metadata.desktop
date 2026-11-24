@@ -1,0 +1,12 @@
+[SddmGreeterTheme]
+Name=TARDIS Gold
+Description=Gold and navy TARDIS police box login screen
+Type=sddm-theme
+Author=Doctor
+Copyright=(c) 2026 Doctor
+License=MIT
+Version=1.0
+MainScript=Main.qml
+ConfigFile=theme.conf
+Theme-Id=tardis-gold
+Theme-API=2.0

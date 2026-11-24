@@ -17,6 +17,7 @@ Git-backed snapshot of the TARDIS desktop configuration.
 - `config/kitty/` — Kitty terminal config
 - `config/fastfetch/` — fastfetch config and animated text T.A.R.D.I.S logo
 - `config/qt6ct/` — Qt appearance config
+- `config/sddm/` — TARDIS Gold login theme and SDDM selection override
 - `docs/` — research notes, local AI, Open WebUI and morning brief guides
 - `wallpapers/README.md` — wallpaper pair documentation
 - `state/wallpaper-current` — active wallpaper pair name
