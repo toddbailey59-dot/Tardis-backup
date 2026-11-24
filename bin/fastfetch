@@ -29,10 +29,24 @@ pad="$(printf '%*s' $((COLS + 2)) '')"
 info="$(printf '%s\n' "$info" | sed "s/^/$pad/")"
 
 frame_count="$(find "$FRAME_DIR" -name 'frame-*.png' | wc -l)"
+
+# Paint the text once. Only the image is replaced per frame, so no flicker.
+printf '\033[2J\033[H'
+printf '%s\n' "$info"
+printf '\033[s'
+prev=""
+idx=0
 for n in $(seq -w 1 "$frame_count"); do
-    printf '\033[2J\033[H'
-    printf '\033_Ga=T,f=100,t=f,c=%s,r=%s;%s\033\\' \
-        "$COLS" "$ROWS" "$(printf '%s' "$FRAME_DIR/frame-$n.png" | base64 -w 0)"
-    printf '%s\n' "$info"
+    printf '\033[H'
+    id=$((4200 + idx))
+    printf '\033_Ga=T,f=100,t=f,c=%s,r=%s,i=%s;%s\033\\' \
+        "$COLS" "$ROWS" "$id" \
+        "$(printf '%s' "$FRAME_DIR/frame-$n.png" | base64 -w 0)"
+    if [ -n "$prev" ]; then
+        printf '\033_Ga=d,d=I,i=%s\033\\' "$prev"
+    fi
+    prev="$id"
+    idx=$((idx + 1))
     sleep 0.08
 done
+printf '\033[u'
