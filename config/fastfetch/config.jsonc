@@ -1,11 +1,10 @@
 {
     "$schema": "https://raw.githubusercontent.com/fastfetch/fastfetch/dev/doc/json_schema.json",
     "logo": {
-        "type": "kitty",
-        "source": "/home/doctor/.config/fastfetch/tardis-gold.gif",
+        "type": "kitty-direct",
+        "source": "/home/doctor/.config/fastfetch/tardis-gold.png",
         "width": 40,
         "height": 28,
-        "animationFrame": 0,
         "padding": {
             "right": 2,
             "top": 1

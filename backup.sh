@@ -90,7 +90,7 @@ cp -a "$SRC/.vscode-oss/extensions/doctor.tardis-theme-0.0.1/." "$REPO/config/vs
 cp -a "$SRC/.config/kitty/kitty.conf" "$REPO/config/kitty/" 2>/dev/null || true
 
 # fastfetch config and animated TARDIS logo (rebuild with bin/tardis-fastfetch-logo)
-for f in config.jsonc README.md tardis.png tardis-gold.gif; do
+for f in config.jsonc README.md tardis.png tardis-gold.gif tardis-gold.png; do
     cp -a "$SRC/.config/fastfetch/$f" "$REPO/config/fastfetch/" 2>/dev/null || true
 done
 

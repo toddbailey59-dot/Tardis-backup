@@ -1,19 +1,24 @@
 # TARDIS fastfetch logo
 
-`config.jsonc` uses the Kitty graphics protocol with `animationFrame: 0`, which
-makes fastfetch play the animated GIF in Kitty terminals.
+In Kitty, `~/bin/fastfetch` takes over plain `fastfetch` calls and animates the
+gold TARDIS logo beside the system information. It uses Kitty's direct file
+graphics protocol, because fastfetch's own `kitty` image type falls back to
+ASCII on this build.
 
 Files:
 
 - `tardis.png` — original source artwork
 - `tardis-gold.gif` — animated gold logo (36 frames, 12 fps, 3 second loop)
+- `tardis-gold.png` — static first frame, used as the fallback logo
 
-Regenerate the GIF after editing the source art:
+Regenerate the GIF and static frame:
 
 ```sh
 ~/bin/tardis-fastfetch-logo
 ```
 
-The animation is a gentle gold glow pulse and sway, so it stays readable beside
-the system information. If your terminal does not support the Kitty image
-protocol, fastfetch falls back to its usual ASCII logo.
+Frame PNGs are cached in `~/.local/share/tardis-fastfetch/frames` and rebuilt
+automatically if missing.
+
+Outside Kitty, or when fastfetch is called with arguments, the real
+`/usr/bin/fastfetch` runs normally.

@@ -1,0 +1,38 @@
+#!/bin/bash
+# Animated TARDIS fastfetch for Kitty. Everything else uses the real fastfetch.
+set -uo pipefail
+
+FF=/usr/bin/fastfetch
+DIR="$HOME/.config/fastfetch"
+FRAME_DIR="$HOME/.local/share/tardis-fastfetch/frames"
+COLS=40
+ROWS=28
+
+# Only take over plain interactive use in Kitty. Flags go to the real binary.
+if [ "$#" -ne 0 ] || [[ "$TERM" != *kitty* ]] || [ -z "${KITTY_WINDOW_ID:-}" ]; then
+    exec "$FF" "$@"
+fi
+
+if ! command -v ffmpeg >/dev/null 2>&1; then
+    exec "$FF" "$@"
+fi
+
+if [ ! -f "$FRAME_DIR/frame-01.png" ]; then
+    mkdir -p "$FRAME_DIR"
+    ffmpeg -hide_banner -loglevel error -y -i "$DIR/tardis-gold.gif" \
+        "$FRAME_DIR/frame-%02d.png" || true
+fi
+[ -f "$FRAME_DIR/frame-01.png" ] || exec "$FF" "$@"
+
+info="$("$FF" --logo none "$@" 2>/dev/null)"
+pad="$(printf '%*s' $((COLS + 2)) '')"
+info="$(printf '%s\n' "$info" | sed "s/^/$pad/")"
+
+frame_count="$(find "$FRAME_DIR" -name 'frame-*.png' | wc -l)"
+for n in $(seq -w 1 "$frame_count"); do
+    printf '\033[2J\033[H'
+    printf '\033_Ga=T,f=100,t=f,c=%s,r=%s;%s\033\\' \
+        "$COLS" "$ROWS" "$(printf '%s' "$FRAME_DIR/frame-$n.png" | base64 -w 0)"
+    printf '%s\n' "$info"
+    sleep 0.08
+done
