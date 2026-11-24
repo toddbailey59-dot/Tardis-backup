@@ -29,6 +29,7 @@ mkdir -p \
     "$REPO/config/code" \
     "$REPO/config/code-user" \
     "$REPO/config/vscode-theme" \
+    "$REPO/config/kitty" \
     "$REPO/config/opencode" \
     "$REPO/config/local-ai" \
     "$REPO/config/morning-brief" \
@@ -82,6 +83,9 @@ cp -a "$SRC/Code/tardis.code-workspace" "$REPO/config/code/" 2>/dev/null || true
 cp -a "$SRC/Code/README.md" "$REPO/config/code/" 2>/dev/null || true
 cp -a "$SRC/.config/Code - OSS/User/settings.json" "$REPO/config/code-user/" 2>/dev/null || true
 cp -a "$SRC/.vscode-oss/extensions/doctor.tardis-theme-0.0.1/." "$REPO/config/vscode-theme/" 2>/dev/null || true
+
+# Kitty terminal config
+cp -a "$SRC/.config/kitty/kitty.conf" "$REPO/config/kitty/" 2>/dev/null || true
 
 # Research/docs
 cp -a "$SRC/hyprland-desktop-shells.md" "$REPO/docs/" 2>/dev/null || true

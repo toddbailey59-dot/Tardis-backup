@@ -14,6 +14,7 @@ Git-backed snapshot of the TARDIS desktop configuration.
 - `config/code/` — VS Code workspace
 - `config/code-user/` — VS Code user settings
 - `config/vscode-theme/` — custom TARDIS Dark theme
+- `config/kitty/` — Kitty terminal config
 - `docs/` — research notes, local AI, Open WebUI and morning brief guides
 - `wallpapers/README.md` — wallpaper pair documentation
 - `state/wallpaper-current` — active wallpaper pair name
