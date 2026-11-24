@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily TARDIS Morning Brief at 07:00
+
+[Timer]
+OnCalendar=*-*-* 07:00:00
+Persistent=true
+RandomizedDelaySec=60
+Unit=morning-brief.service
+
+[Install]
+WantedBy=timers.target

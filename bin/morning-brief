@@ -1,0 +1,5 @@
+#!/bin/sh
+# TARDIS Morning Brief CLI.
+set -eu
+exec /home/doctor/.local/share/morning-brief/venv/bin/python \
+    /home/doctor/AI/morning-brief/brief.py "$@"

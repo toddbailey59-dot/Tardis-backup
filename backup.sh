@@ -30,6 +30,8 @@ mkdir -p \
     "$REPO/config/code-user" \
     "$REPO/config/vscode-theme" \
     "$REPO/config/opencode" \
+    "$REPO/config/local-ai" \
+    "$REPO/config/morning-brief" \
     "$REPO/config/systemd-user" \
     "$REPO/bin" \
     "$REPO/docs" \
@@ -52,14 +54,25 @@ if [ -d "$SRC/bin" ]; then
 fi
 
 # Local AI wrappers and services (models, binaries, venv and WebUI data are excluded)
-for f in llama-server llama-cli llama-chat local-ai open-webui-ctl; do
+for f in llama-server llama-cli llama-chat local-ai open-webui-ctl morning-brief tardis-voice tardis-calendar tardis-tool-proxy; do
     cp -a "$SRC/.local/bin/$f" "$REPO/bin/" 2>/dev/null || true
 done
-for f in local-ai.service open-webui.service; do
+for f in local-ai.service local-ai-proxy.service open-webui.service morning-brief.service morning-brief.timer tardis-calendar.service; do
     cp -a "$SRC/.config/systemd/user/$f" "$REPO/config/systemd-user/" 2>/dev/null || true
 done
 cp -a "$SRC/AI/local-ai/README.md" "$REPO/docs/local-ai.md" 2>/dev/null || true
 cp -a "$SRC/AI/open-webui/README.md" "$REPO/docs/open-webui.md" 2>/dev/null || true
+cp -a "$SRC/AI/morning-brief/README.md" "$REPO/docs/morning-brief.md" 2>/dev/null || true
+
+# Local AI tool template and compatibility proxy (models and venvs are excluded)
+for f in tool_proxy.py; do
+    cp -a "$SRC/AI/local-ai/$f" "$REPO/config/local-ai/" 2>/dev/null || true
+done
+
+# Morning brief / calendar / voice skill (venv and generated audio are excluded)
+for f in brief.py voice.py calendar_app.py openwebui_tool.py config.json reminders.json qwen2.5-tool.jinja tardis-tool.jinja README.md; do
+    cp -a "$SRC/AI/morning-brief/$f" "$REPO/config/morning-brief/" 2>/dev/null || true
+done
 
 # OpenCode local provider config (auth/service secrets are not copied)
 cp -a "$SRC/.config/opencode/opencode.json" "$REPO/config/opencode/" 2>/dev/null || true

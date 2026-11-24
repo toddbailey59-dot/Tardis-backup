@@ -1,0 +1,5 @@
+#!/bin/sh
+# Speak text with the local TARDIS voice.
+set -eu
+exec /home/doctor/.local/share/morning-brief/venv/bin/python \
+    /home/doctor/AI/morning-brief/voice.py "$@"

@@ -1,0 +1,5 @@
+#!/bin/sh
+# Normalize local model tool calls for OpenAI-compatible clients.
+set -eu
+exec /home/doctor/.local/share/morning-brief/venv/bin/python \
+    /home/doctor/AI/local-ai/tool_proxy.py "$@"

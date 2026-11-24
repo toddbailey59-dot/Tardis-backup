@@ -1,0 +1,46 @@
+{%- if tools %}
+    {{- '<|im_start|>system\n' }}
+    {%- if messages[0]['role'] == 'system' %}
+        {{- messages[0]['content'] }}
+    {%- else %}
+        {{- 'You are TARDIS, a helpful local assistant.' }}
+    {%- endif %}
+    {{- "\n\nTOOL CALLING MODE. You have these functions:\n" }}
+    {%- for tool in tools %}
+        {%- set fn = tool.function if tool.function is defined else tool %}
+        {{- "\n" ~ fn.name ~ ": " ~ (fn.description or '') ~ "\nArguments: " ~ (fn.parameters | tojson) }}
+    {%- endfor %}
+    {{- "\n\nTo call a function, reply with ONLY this exact form:\n<tool_call>\n{\"name\": \"function_name\", \"arguments\": {\"key\": \"value\"}}\n</tool_call>\nNever output the word functions or a function list. Never wrap the call in prose. If no function is needed, answer normally.\n<|im_end|>\n" }}
+{%- else %}
+    {%- if messages[0]['role'] == 'system' %}
+        {{- '<|im_start|>system\n' + messages[0]['content'] + '<|im_end|>\n' }}
+    {%- else %}
+        {{- '<|im_start|>system\nYou are TARDIS, a helpful local assistant.<|im_end|>\n' }}
+    {%- endif %}
+{%- endif %}
+{%- for message in messages %}
+    {%- if (message.role == "user") or (message.role == "system" and not loop.first) or (message.role == "assistant" and not message.tool_calls) %}
+        {{- '<|im_start|>' + message.role + '\n' + message.content + '<|im_end|>' + '\n' }}
+    {%- elif message.role == "assistant" %}
+        {{- '<|im_start|>' + message.role }}
+        {%- if message.content %}
+            {{- '\n' + message.content }}
+        {%- endif %}
+        {%- for tool_call in message.tool_calls %}
+            {%- set fn = tool_call.function if tool_call.function is defined else tool_call %}
+            {{- '\n<tool_call>\n{"name": "' ~ fn.name ~ '", "arguments": ' ~ (fn.arguments | tojson) ~ '}\n</tool_call>' }}
+        {%- endfor %}
+        {{- '<|im_end|>\n' }}
+    {%- elif message.role == "tool" %}
+        {%- if (loop.index0 == 0) or (messages[loop.index0 - 1].role != "tool") %}
+            {{- '<|im_start|>user' }}
+        {%- endif %}
+        {{- '\n<tool_response>\n' ~ message.content ~ '\n</tool_response>' }}
+        {%- if loop.last or (messages[loop.index0 + 1].role != "tool") %}
+            {{- '<|im_end|>\n' }}
+        {%- endif %}
+    {%- endif %}
+{%- endfor %}
+{%- if add_generation_prompt %}
+    {{- '<|im_start|>assistant\n' }}
+{%- endif %}

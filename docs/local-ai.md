@@ -62,13 +62,23 @@ Or directly:
 ~/.local/bin/local-ai log
 ```
 
-## Service file
+## Service files
 
 ```text
 ~/.config/systemd/user/local-ai.service
+~/.config/systemd/user/local-ai-proxy.service
 ```
 
-It runs with `--n-gpu-layers 99`, so the model is fully offloaded to the RX 580 via Vulkan.
+`local-ai.service` runs llama.cpp on `127.0.0.1:8081` with `--n-gpu-layers 99`,
+so the model is fully offloaded to the RX 580 via Vulkan. It uses a 16K context
+with q8 KV cache and the ChatML tool template at
+`~/AI/morning-brief/tardis-tool.jinja`.
+
+`local-ai-proxy.service` exposes the public OpenAI-compatible endpoint on
+`127.0.0.1:8080`. It normalizes the local model's JSON tool requests into
+proper `tool_calls`, which makes OpenCode and Open WebUI tools work reliably.
+
+`~/.local/bin/local-ai {start|stop|restart|enable|status|log}` manages both services.
 
 ## Adding models
 

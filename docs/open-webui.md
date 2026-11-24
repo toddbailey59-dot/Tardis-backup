@@ -84,6 +84,13 @@ use those credentials.
 
 The default and pinned model are set to `qwen2.5-coder-7b`.
 
+### TARDIS tools
+
+The `tardis_brief` tool is enabled. It can fetch the morning brief data, add
+appointments and reminders, list the agenda, mark items done, snooze or delete
+items, and speak with the local TARDIS voice. See
+`~/AI/morning-brief/README.md` for examples.
+
 ### Controls
 
 ```sh

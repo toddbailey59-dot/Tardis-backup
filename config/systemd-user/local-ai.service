@@ -11,11 +11,15 @@ ExecStart=%h/.local/bin/llama-server \
     --model %h/.local/share/llama-models/qwen2.5-coder-7b-instruct-q4_k_m.gguf \
     --alias qwen2.5-coder-7b \
     --host 127.0.0.1 \
-    --port 8080 \
+    --port 8081 \
     --n-gpu-layers 99 \
-    --ctx-size 8192 \
+    --ctx-size 16384 \
+    --cache-type-k q8_0 \
+    --cache-type-v q8_0 \
     --threads 8 \
-    --threads-batch 8
+    --threads-batch 8 \
+    --jinja \
+    --chat-template-file %h/AI/morning-brief/tardis-tool.jinja
 Restart=on-failure
 RestartSec=5
 

@@ -1,6 +1,6 @@
 SUPER + A        application launcher (TARDIS shell)
 SUPER + B        librewolf
-SUPER + C        close window
+SUPER + C        TARDIS calendar (appointments and reminders)
 SUPER + D        quick settings / OSD panel
 SUPER + E        thunar file manager
 SUPER + F        firefox

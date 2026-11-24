@@ -1,0 +1,10 @@
+[Unit]
+Description=TARDIS Morning Brief
+After=local-ai.service local-ai-proxy.service
+Requires=local-ai.service local-ai-proxy.service
+
+[Service]
+Type=oneshot
+Environment=PULSE_SERVER=unix:/run/user/1000/pulse/native
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+ExecStart=/home/doctor/.local/bin/morning-brief run --speak

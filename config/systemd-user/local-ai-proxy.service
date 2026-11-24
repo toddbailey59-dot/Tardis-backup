@@ -1,0 +1,13 @@
+[Unit]
+Description=Local AI tool-call compatibility proxy
+After=local-ai.service
+Requires=local-ai.service
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/tardis-tool-proxy --host 127.0.0.1 --port 8080 --backend http://127.0.0.1:8081
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

@@ -6,13 +6,15 @@ Git-backed snapshot of the TARDIS desktop configuration.
 
 - `config/quickshell/tardis-shell/` — Quickshell shell source and settings
 - `config/hypr/` — Hyprland, hyprpaper, hyprlock, keybinds, workspaces
-- `bin/` — wallpaper and local AI helper scripts
-- `config/systemd-user/` — local AI and Open WebUI service units
+- `bin/` — wallpaper, local AI, brief, calendar and voice helper scripts
+- `config/systemd-user/` — local AI, proxy, brief, calendar and WebUI units
+- `config/local-ai/` — tool-call proxy and service template
+- `config/morning-brief/` — brief, calendar, voice, tool code and agenda store
 - `config/opencode/` — OpenCode local provider config
 - `config/code/` — VS Code workspace
 - `config/code-user/` — VS Code user settings
 - `config/vscode-theme/` — custom TARDIS Dark theme
-- `docs/` — research notes, local AI guide, and Open WebUI guide
+- `docs/` — research notes, local AI, Open WebUI and morning brief guides
 - `wallpapers/README.md` — wallpaper pair documentation
 - `state/wallpaper-current` — active wallpaper pair name
 

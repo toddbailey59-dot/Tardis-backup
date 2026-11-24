@@ -1,0 +1,5 @@
+#!/bin/sh
+# Start the local TARDIS calendar web app.
+set -eu
+exec /home/doctor/.local/share/morning-brief/venv/bin/python \
+    /home/doctor/AI/morning-brief/calendar_app.py "$@"

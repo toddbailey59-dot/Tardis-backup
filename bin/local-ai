@@ -6,30 +6,31 @@ shift || true
 
 case "$ACTION" in
     start)
-        systemctl --user start local-ai.service
+        systemctl --user start local-ai.service local-ai-proxy.service
         echo "Local AI starting on http://127.0.0.1:8080"
         ;;
     stop)
-        systemctl --user stop local-ai.service
+        systemctl --user stop local-ai-proxy.service local-ai.service
         echo "Local AI stopped"
         ;;
     restart)
         systemctl --user restart local-ai.service
+        systemctl --user restart local-ai-proxy.service
         echo "Local AI restarted"
         ;;
     enable)
-        systemctl --user enable --now local-ai.service
+        systemctl --user enable --now local-ai.service local-ai-proxy.service
         echo "Local AI enabled at login"
         ;;
     disable)
-        systemctl --user disable --now local-ai.service
+        systemctl --user disable --now local-ai-proxy.service local-ai.service
         echo "Local AI disabled at login"
         ;;
     status)
-        systemctl --user status local-ai.service --no-pager 2>&1 || true
+        systemctl --user status local-ai.service local-ai-proxy.service --no-pager 2>&1 || true
         ;;
     log)
-        journalctl --user -u local-ai.service -f
+        journalctl --user -u local-ai.service -u local-ai-proxy.service -f
         ;;
     chat)
         exec "$HOME/.local/bin/llama-chat" "$@"

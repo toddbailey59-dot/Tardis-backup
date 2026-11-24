@@ -1,6 +1,7 @@
 [Unit]
 Description=Open WebUI (local ChatGPT-like page)
-After=local-ai.service
+After=local-ai.service local-ai-proxy.service
+Requires=local-ai.service local-ai-proxy.service
 
 [Service]
 Type=simple
