@@ -1,10 +1,8 @@
 {
     "$schema": "https://raw.githubusercontent.com/fastfetch/fastfetch/dev/doc/json_schema.json",
     "logo": {
-        "type": "kitty-direct",
-        "source": "/home/doctor/.config/fastfetch/tardis-gold.png",
-        "width": 40,
-        "height": 28,
+        "type": "file-raw",
+        "source": "/home/doctor/.config/fastfetch/tardis-text-logo.txt",
         "padding": {
             "right": 2,
             "top": 1

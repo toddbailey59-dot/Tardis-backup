@@ -1,27 +1,26 @@
 # TARDIS fastfetch logo
 
-In Kitty, `~/bin/fastfetch` takes over plain `fastfetch` calls and animates the
-gold TARDIS logo beside the system information. It uses Kitty's direct file
-graphics protocol, because fastfetch's own `kitty` image type falls back to
-ASCII on this build.
+`~/bin/fastfetch` replaces a plain `fastfetch` call in Kitty with an animated
+text logo that spells out `T.A.R.D.I.S`. It uses only terminal text and cursor
+movement — no Kitty graphics protocol, no image transmissions, and no
+`i=…;OK` replies.
+
+The system information is printed once. Each frame is redrawn in place while
+the rest of the screen is left alone, so there is no per-frame flicker. The
+highlight moves forward through the letters, back again, then settles on an
+all-gold frame.
 
 Files:
 
-- `tardis.png` — original source artwork
-- `tardis-gold.gif` — animated gold logo (36 frames, 12 fps, 3 second loop)
-- `tardis-gold.png` — static first frame, used as the fallback logo
+- `tardis-text-frames` — 11 animation frames used by `~/bin/fastfetch`
+- `tardis-text-logo.txt` — static version used by fastfetch outside Kitty
+- `tardis.png`, `tardis-gold.gif`, `tardis-gold.png`, `tardis-spin.gif` — legacy image assets, no longer required
 
-Regenerate the GIF and static frame:
+Regenerate the text frames and static logo:
 
 ```sh
-~/bin/tardis-fastfetch-logo
+~/bin/tardis-fastfetch-text-logo
 ```
 
-Frame PNGs are cached in `~/.local/share/tardis-fastfetch/frames` and rebuilt
-automatically if missing. The text is drawn once; each frame is drawn as a new
-Kitty image and the previous image is deleted, so the screen does not flicker.
-Graphics replies are suppressed with `q=2`, so no `i=…;OK` text leaks into the
-terminal.
-
-Outside Kitty, or when fastfetch is called with arguments, the real
-`/usr/bin/fastfetch` runs normally.
+Calling `fastfetch` with arguments still runs `/usr/bin/fastfetch` normally,
+using the static text logo from `config.jsonc`.

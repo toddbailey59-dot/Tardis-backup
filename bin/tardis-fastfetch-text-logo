@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+"""Build the animated text T.A.R.D.I.S logo used by ~/bin/fastfetch."""
+from pathlib import Path
+import re
+
+OUT_DIR = Path.home() / ".config/fastfetch"
+FRAME_FILE = OUT_DIR / "tardis-text-frames"
+STATIC_FILE = OUT_DIR / "tardis-text-logo.txt"
+
+RESET = "\033[0m"
+DIM = "\033[38;5;94m"
+GOLD = "\033[38;5;178m"
+BRIGHT = "\033[38;5;220m"
+WIDTH = 40
+HEIGHT = 20
+LETTERS = "TARDIS"
+
+ansi = re.compile(r"\033\[[0-9;]*m")
+
+
+def visible_len(s: str) -> int:
+    return len(ansi.sub("", s))
+
+
+def fit(s: str) -> str:
+    pad = WIDTH - visible_len(s)
+    if pad < 0:
+        raise ValueError(f"line is {visible_len(s)} columns, limit is {WIDTH}")
+    return s + " " * pad
+
+
+def frame(active: int | None) -> str:
+    text = ""
+    marks = ""
+    for i, ch in enumerate(LETTERS):
+        text += f"{BRIGHT if active is None or i == active else DIM}{ch}{RESET}"
+        mark = "●" if active is None or i == active else "○"
+        marks += f"{GOLD if active is None or i == active else DIM}{mark}{RESET}"
+        if i < len(LETTERS) - 1:
+            text += f"{DIM}.{RESET}"
+            marks += " "
+
+    inner_width = len("  T.A.R.D.I.S  ")
+    indent = " " * ((WIDTH - (inner_width + 2)) // 2)
+    mark_indent = " " * ((WIDTH - (len(LETTERS) * 2 - 1)) // 2)
+
+    rows = [""] * HEIGHT
+    rows[7] = fit(indent + DIM + "╭" + "─" * inner_width + "╮" + RESET)
+    rows[8] = fit(indent + DIM + "║  " + RESET + text + DIM + "  ║" + RESET)
+    rows[9] = fit(indent + DIM + "╰" + "─" * inner_width + "╯" + RESET)
+    rows[10] = fit(mark_indent + marks)
+    return "\n".join(rows) + "\n"
+
+
+# Pulse forward through the letters, back again, then settle on all gold.
+sequence = list(range(len(LETTERS))) + list(range(len(LETTERS) - 2, 0, -1)) + [None]
+frames = [frame(active) for active in sequence]
+
+OUT_DIR.mkdir(parents=True, exist_ok=True)
+FRAME_FILE.write_text("\f".join(frames), encoding="utf-8")
+STATIC_FILE.write_text(frame(None), encoding="utf-8")
+
+print(f"Wrote {len(frames)} text frames to {FRAME_FILE}")
+print(f"Wrote static logo to {STATIC_FILE}")

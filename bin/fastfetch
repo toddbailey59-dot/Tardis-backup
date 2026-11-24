@@ -1,52 +1,53 @@
 #!/bin/bash
-# Animated TARDIS fastfetch for Kitty. Everything else uses the real fastfetch.
+# Animated text T.A.R.D.I.S fastfetch logo. No graphics protocol or screen clears.
 set -uo pipefail
 
 FF=/usr/bin/fastfetch
-DIR="$HOME/.config/fastfetch"
-FRAME_DIR="$HOME/.local/share/tardis-fastfetch/frames"
-COLS=40
-ROWS=28
+FRAME_FILE="$HOME/.config/fastfetch/tardis-text-frames"
+PAD=42
+DELAY=0.12
 
-# Only take over plain interactive use in Kitty. Flags go to the real binary.
-if [ "$#" -ne 0 ] || [[ "$TERM" != *kitty* ]] || [ -z "${KITTY_WINDOW_ID:-}" ]; then
+# Flags go to the real binary. The animation only replaces a plain startup call.
+if [ "$#" -ne 0 ] || [ ! -r "$FRAME_FILE" ]; then
     exec "$FF" "$@"
 fi
-
-if ! command -v ffmpeg >/dev/null 2>&1; then
-    exec "$FF" "$@"
-fi
-
-if [ ! -f "$FRAME_DIR/frame-01.png" ]; then
-    mkdir -p "$FRAME_DIR"
-    ffmpeg -hide_banner -loglevel error -y -i "$DIR/tardis-gold.gif" \
-        "$FRAME_DIR/frame-%02d.png" || true
-fi
-[ -f "$FRAME_DIR/frame-01.png" ] || exec "$FF" "$@"
 
 info="$("$FF" --logo none "$@" 2>/dev/null)"
-pad="$(printf '%*s' $((COLS + 2)) '')"
+lines="$(printf '%s\n' "$info" | wc -l)"
+pad="$(printf '%*s' "$PAD" '')"
 info="$(printf '%s\n' "$info" | sed "s/^/$pad/")"
 
-frame_count="$(find "$FRAME_DIR" -name 'frame-*.png' | wc -l)"
+mapfile -d $'\f' -t frames < "$FRAME_FILE"
 
-# Paint the text once. Only the image is replaced per frame, so no flicker.
-printf '\033[2J\033[H'
 printf '%s\n' "$info"
-printf '\033[s'
-prev=""
-idx=0
-for n in $(seq -w 1 "$frame_count"); do
-    printf '\033[H'
-    id=$((4200 + idx))
-    printf '\033_Ga=T,f=100,t=f,q=2,c=%s,r=%s,i=%s;%s\033\\' \
-        "$COLS" "$ROWS" "$id" \
-        "$(printf '%s' "$FRAME_DIR/frame-$n.png" | base64 -w 0)"
-    if [ -n "$prev" ]; then
-        printf '\033_Ga=d,d=I,i=%s,q=2\033\\' "$prev"
+
+saved=0
+cleanup() {
+    if [ "$saved" -eq 1 ]; then
+        printf '\033[u'
     fi
-    prev="$id"
-    idx=$((idx + 1))
-    sleep 0.08
+    printf '\033[?25h'
+}
+trap cleanup EXIT INT TERM
+
+printf '\033[s'
+saved=1
+printf '\033[?25l'
+
+for frame in "${frames[@]}"; do
+    frame="${frame%$'\n'}"
+    frame="$(printf '%s\n' "$frame" | awk -v n="$lines" '
+        NR <= n { print }
+        END { for (i = NR + 1; i <= n; i++) print "" }
+    ')"
+
+    # Return to the saved prompt row, then move up to the logo's first row.
+    printf '\033[u\033[%sA\033[1G' "$lines"
+    printf '%s\n' "$frame"
+    sleep "$DELAY"
 done
+
 printf '\033[u'
+saved=0
+printf '\033[?25h'
+trap - EXIT INT TERM
