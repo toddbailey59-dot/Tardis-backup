@@ -96,8 +96,7 @@ Modal {
                 HelpRow { width: parent.width; keys: "SUPER + V"; description: "Toggle floating"; settings: helpPanel.settings }
                 HelpRow { width: parent.width; keys: "SUPER + S"; description: "Scratchpad toggle"; settings: helpPanel.settings; alternate: true }
                 HelpRow { width: parent.width; keys: "SUPER + SHIFT + S"; description: "Move to scratchpad"; settings: helpPanel.settings }
-                HelpRow { width: parent.width; keys: "SUPER + C"; description: "Close window"; settings: helpPanel.settings; alternate: true }
-                HelpRow { width: parent.width; keys: "SUPER + SHIFT + Q"; description: "Close window (alt)"; settings: helpPanel.settings }
+                HelpRow { width: parent.width; keys: "SUPER + SHIFT + Q"; description: "Close window"; settings: helpPanel.settings; alternate: true }
 
                 Text {
                     text: "WORKSPACES / MOUSE"
