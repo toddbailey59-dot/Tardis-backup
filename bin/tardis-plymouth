@@ -1,0 +1,153 @@
+#!/bin/bash
+# Install, check, or restore the TARDIS Gold Plymouth boot splash.
+set -euo pipefail
+
+INVOKER="${SUDO_USER:-${PKEXEC_UID:-$(id -un)}}"
+INVOKER_HOME="$(getent passwd "$INVOKER" | cut -d: -f6)"
+SRC="${INVOKER_HOME:-$HOME}/.local/share/plymouth/themes/tardis-gold"
+DST="/usr/share/plymouth/themes/tardis-gold"
+MKINIT="/etc/mkinitcpio.conf"
+GRUB_DEFAULT="/etc/default/grub"
+GRUB_CFG="/boot/grub/grub.cfg"
+INITRD="/boot/initramfs-linux.img"
+INITRD_BACKUP="/boot/initramfs-linux.tardis-pre-plymouth.img"
+MK_BACKUP="/etc/mkinitcpio.conf.tardis-pre-plymouth"
+GRUB_BACKUP="/etc/default/grub.tardis-pre-plymouth"
+
+usage() {
+    cat <<'EOF'
+Usage: tardis-plymouth {status|check|install|restore}
+
+  status    Show source, install, hook, cmdline, and initramfs state
+  check     Verify local theme assets
+  install   Install theme, enable plymouth/splash, rebuild initramfs (sudo)
+  restore   Disable plymouth/splash and rebuild initramfs (sudo)
+EOF
+}
+
+check_theme() {
+    for f in tardis-gold.plymouth tardis-gold.script background.png box.png entry.png bullet.png progress_box.png progress_bar.png; do
+        [ -f "$SRC/$f" ] || { echo "Missing theme file: $SRC/$f" >&2; return 1; }
+    done
+    echo "Theme assets OK: $SRC"
+}
+
+status() {
+    echo "Source theme: $SRC"
+    echo "Installed theme: $DST"
+    if [ -f "$DST/tardis-gold.plymouth" ]; then
+        echo "Installed theme found: yes"
+    else
+        echo "Installed theme found: no"
+    fi
+
+    echo -n "Plymouth default theme: "
+    plymouth-set-default-theme 2>/dev/null || echo "unknown"
+
+    echo -n "mkinitcpio plymouth hook: "
+    if grep -qE '^HOOKS=\([^)]*[[:space:]]plymouth([[:space:]]|\))' "$MKINIT" 2>/dev/null; then
+        echo yes
+    else
+        echo no
+    fi
+
+    echo -n "GRUB splash cmdline: "
+    if grep -q '^GRUB_CMDLINE_LINUX_DEFAULT=.*splash' "$GRUB_DEFAULT" 2>/dev/null; then
+        echo yes
+    else
+        echo no
+    fi
+
+    echo -n "Initramfs contains plymouth: "
+    if command -v lsinitcpio >/dev/null 2>&1 && lsinitcpio "$INITRD" 2>/dev/null | grep -q plymouth; then
+        echo yes
+    else
+        echo no
+    fi
+
+    echo "Backups: $MK_BACKUP, $GRUB_BACKUP, $INITRD_BACKUP"
+}
+
+install_theme() {
+    check_theme
+
+    [ -f "$MK_BACKUP" ] || sudo cp -a "$MKINIT" "$MK_BACKUP"
+    [ -f "$GRUB_BACKUP" ] || sudo cp -a "$GRUB_DEFAULT" "$GRUB_BACKUP"
+    [ -f "$INITRD_BACKUP" ] || sudo cp -f "$INITRD" "$INITRD_BACKUP"
+
+    sudo install -d -m 755 /usr/share/plymouth/themes
+    sudo install -d -m 755 "$DST"
+    sudo cp -R "$SRC/." "$DST/"
+
+    tmp="$(mktemp)"
+    trap 'rm -f "$tmp"' EXIT
+    awk '
+        /^HOOKS=/ {
+            if ($0 !~ /(^|[[:space:]])plymouth([[:space:]]|\))/) {
+                added = gsub(/[[:space:]]encrypt/, " plymouth encrypt", $0)
+                if (!added) {
+                    gsub(/[[:space:]]filesystems/, " plymouth filesystems", $0)
+                }
+            }
+        }
+        { print }
+    ' "$MKINIT" > "$tmp"
+    sudo install -m 644 "$tmp" "$MKINIT"
+    rm -f "$tmp"
+
+    tmp="$(mktemp)"
+    awk '
+        /^GRUB_CMDLINE_LINUX_DEFAULT=/ {
+            if ($0 !~ /splash/) sub(/"$/, " splash\"")
+        }
+        { print }
+    ' "$GRUB_DEFAULT" > "$tmp"
+    sudo install -m 644 "$tmp" "$GRUB_DEFAULT"
+    rm -f "$tmp"
+    trap - EXIT
+
+    sudo plymouth-set-default-theme tardis-gold -R
+    sudo grub-mkconfig -o "$GRUB_CFG"
+
+    echo "Installed TARDIS Gold Plymouth. It will appear at the next boot."
+}
+
+restore_theme() {
+    tmp="$(mktemp)"
+    trap 'rm -f "$tmp"' EXIT
+    awk '
+        /^HOOKS=/ {
+            gsub(/(^|[[:space:]])plymouth([[:space:]]|\))/, " ")
+            gsub(/[[:space:]]+/, " ", $0)
+            sub(/HOOKS= \(/, "HOOKS=(")
+        }
+        { print }
+    ' "$MKINIT" > "$tmp"
+    sudo install -m 644 "$tmp" "$MKINIT"
+    rm -f "$tmp"
+
+    tmp="$(mktemp)"
+    awk '
+        /^GRUB_CMDLINE_LINUX_DEFAULT=/ {
+            gsub(/[[:space:]]*splash/, "")
+        }
+        { print }
+    ' "$GRUB_DEFAULT" > "$tmp"
+    sudo install -m 644 "$tmp" "$GRUB_DEFAULT"
+    rm -f "$tmp"
+    trap - EXIT
+
+    sudo plymouth-set-default-theme --reset -R
+    sudo grub-mkconfig -o "$GRUB_CFG"
+
+    echo "Restored default Plymouth settings. Backups remain at $MK_BACKUP and $GRUB_BACKUP."
+}
+
+case "${1:-status}" in
+    status) status ;;
+    check) check_theme ;;
+    install) install_theme ;;
+    restore) restore_theme ;;
+    -h|--help|help) usage ;;
+    *) usage >&2; exit 2 ;;
+esac

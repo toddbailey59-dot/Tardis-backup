@@ -1,0 +1,33 @@
+#!/bin/bash
+# Rebuild the TARDIS Gold Plymouth theme images.
+set -euo pipefail
+
+THEME="$HOME/.local/share/plymouth/themes/tardis-gold"
+GRUB_BG="$HOME/.local/share/grub/themes/tardis-gold/background.png"
+FONT=/usr/share/fonts/TTF/DejaVuSansMono-Bold.ttf
+
+[ -f "$GRUB_BG" ] || { echo "Missing GRUB background: $GRUB_BG" >&2; exit 1; }
+mkdir -p "$THEME"
+
+cp -f "$GRUB_BG" "$THEME/background.png"
+
+ffmpeg -hide_banner -loglevel error -y -f lavfi -i 'color=c=0x0a1729@0.94:s=760x180:d=1' \
+    -vf "format=rgba,drawbox=x=0:y=0:w=iw:h=ih:color=0x8a6a2f@0.90:t=3,drawtext=fontfile=$FONT:text='ENTER TARDIS KEY':fontsize=26:fontcolor=0xffd36e:x=(w-text_w)/2:y=42,drawtext=fontfile=$FONT:text='AUTHORIZED PERSONNEL ONLY':fontsize=14:fontcolor=0x9fb2c8:x=(w-text_w)/2:y=82" \
+    -frames:v 1 "$THEME/box.png"
+
+ffmpeg -hide_banner -loglevel error -y -f lavfi -i 'color=c=0x07111f@0.98:s=360x46:d=1' \
+    -vf "format=rgba,drawbox=x=0:y=0:w=iw:h=ih:color=0xe5b64c@0.85:t=2" \
+    -frames:v 1 "$THEME/entry.png"
+
+ffmpeg -hide_banner -loglevel error -y -f lavfi -i 'color=c=0x000000@0:s=14x14:d=1' \
+    -vf "format=rgba,drawbox=x=1:y=1:w=12:h=12:color=0xffd36e@1.0:t=fill" \
+    -frames:v 1 "$THEME/bullet.png"
+
+ffmpeg -hide_banner -loglevel error -y -f lavfi -i 'color=c=0x07111f@0.92:s=760x28:d=1' \
+    -vf "format=rgba,drawbox=x=0:y=0:w=iw:h=ih:color=0x8a6a2f@0.90:t=2" \
+    -frames:v 1 "$THEME/progress_box.png"
+
+ffmpeg -hide_banner -loglevel error -y -f lavfi -i 'color=c=0xe5b64c@1.0:s=720x16:d=1' \
+    -vf format=rgba -frames:v 1 "$THEME/progress_bar.png"
+
+echo "Rebuilt TARDIS Gold Plymouth theme in $THEME"

@@ -19,6 +19,7 @@ Git-backed snapshot of the TARDIS desktop configuration.
 - `config/qt6ct/` — Qt appearance config
 - `config/sddm/` — TARDIS Gold login theme and SDDM selection override
 - `config/grub/` — TARDIS Gold boot theme and active GRUB default
+- `config/plymouth/` — TARDIS Gold boot splash and mkinitcpio config
 - `docs/` — research notes, local AI, Open WebUI and morning brief guides
 - `wallpapers/README.md` — wallpaper pair documentation
 - `state/wallpaper-current` — active wallpaper pair name

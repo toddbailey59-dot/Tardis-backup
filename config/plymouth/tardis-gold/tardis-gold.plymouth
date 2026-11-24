@@ -1,0 +1,9 @@
+[Plymouth Theme]
+Name=TARDIS Gold
+Description=Gold T.A.R.D.I.S boot splash with themed disk unlock prompt
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/tardis-gold
+ScriptFile=/usr/share/plymouth/themes/tardis-gold/tardis-gold.script
+ConsoleLogBackgroundColor=0x06101f

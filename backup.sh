@@ -34,6 +34,7 @@ mkdir -p \
     "$REPO/config/qt6ct" \
     "$REPO/config/sddm" \
     "$REPO/config/grub" \
+    "$REPO/config/plymouth" \
     "$REPO/config/opencode" \
     "$REPO/config/local-ai" \
     "$REPO/config/morning-brief" \
@@ -106,6 +107,10 @@ cp -a "/etc/sddm.conf.d/99-tardis.conf" "$REPO/config/sddm/sddm-99-tardis.conf" 
 # GRUB TARDIS Gold theme and active GRUB default
 cp -a "$SRC/.local/share/grub/themes/tardis-gold" "$REPO/config/grub/" 2>/dev/null || true
 cp -a "/etc/default/grub" "$REPO/config/grub/grub-default" 2>/dev/null || true
+
+# Plymouth TARDIS Gold theme and boot configuration
+cp -a "$SRC/.local/share/plymouth/themes/tardis-gold" "$REPO/config/plymouth/" 2>/dev/null || true
+cp -a "/etc/mkinitcpio.conf" "$REPO/config/plymouth/mkinitcpio.conf" 2>/dev/null || true
 
 # Research/docs
 cp -a "$SRC/hyprland-desktop-shells.md" "$REPO/docs/" 2>/dev/null || true
