@@ -39,30 +39,31 @@ git -C ~/tardis-backup push
 
 ## GitHub setup
 
-1. Add this SSH public key to GitHub → Settings → SSH and GPG keys:
+Authentication uses an HTTPS personal access token stored locally at
+`~/.config/git/credentials` (mode `600`). The Git identity for commits is still
+`newlife50 <newlife50@live.com>`.
 
-   ```text
-   ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAPq/X2JtblJl0WT8g1AsvvLFA0/QV/TvrD7BJFJK9ap newlife50@live.com
-   ```
+The token currently belongs to GitHub account `toddbailey59-dot`, so the remote
+is:
 
-2. Create an empty GitHub repository named `tardis-backup`.
-3. The `origin` remote is preset to:
+```text
+https://github.com/toddbailey59-dot/tardis-backup.git
+```
 
-   ```text
-   git@github.com:newlife50/tardis-backup.git
-   ```
-
-4. Test authentication:
-
-   ```sh
-   ssh -T git@github.com
-   ```
-
-5. Push:
+1. Create an empty GitHub repository named `tardis-backup` under
+   `toddbailey59-dot`. Do not add a README, license, or `.gitignore`.
+2. The token must have **Contents: read/write** on that repository.
+3. Push:
 
    ```sh
    ~/tardis-backup/backup.sh "initial TARDIS backup" --push
    ```
+
+To replace the stored token later:
+
+```sh
+~/tardis-backup/set-github-token.sh
+```
 
 ## Restore
 
