@@ -1,0 +1,7 @@
+#!/bin/bash
+set -euo pipefail
+
+export LD_LIBRARY_PATH="$HOME/.local/lib/llama.cpp${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export VK_DRIVER_FILES="/usr/share/vulkan/icd.d/radeon_icd.json${VK_DRIVER_FILES:+:$VK_DRIVER_FILES}"
+
+exec "$HOME/.local/lib/llama.cpp/llama-cli" "$@"

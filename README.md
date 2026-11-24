@@ -6,11 +6,12 @@ Git-backed snapshot of the TARDIS desktop configuration.
 
 - `config/quickshell/tardis-shell/` — Quickshell shell source and settings
 - `config/hypr/` — Hyprland, hyprpaper, hyprlock, keybinds, workspaces
-- `bin/` — wallpaper helper scripts
+- `bin/` — wallpaper and local AI helper scripts
+- `config/systemd-user/` — local AI service unit
 - `config/code/` — VS Code workspace
 - `config/code-user/` — VS Code user settings
 - `config/vscode-theme/` — custom TARDIS Dark theme
-- `docs/` — research notes
+- `docs/` — research notes and local AI guide
 - `wallpapers/README.md` — wallpaper pair documentation
 - `state/wallpaper-current` — active wallpaper pair name
 

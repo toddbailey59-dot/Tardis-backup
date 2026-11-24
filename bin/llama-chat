@@ -1,0 +1,17 @@
+#!/bin/bash
+set -euo pipefail
+
+MODEL="${LOCAL_AI_MODEL:-$HOME/.local/share/llama-models/qwen2.5-coder-7b-instruct-q4_k_m.gguf}"
+
+if [ ! -f "$MODEL" ]; then
+    echo "Model not found: $MODEL" >&2
+    exit 1
+fi
+
+exec "$HOME/.local/bin/llama-cli" \
+    --model "$MODEL" \
+    --n-gpu-layers 99 \
+    --ctx-size 8192 \
+    --threads 8 \
+    --threads-batch 8 \
+    "$@"

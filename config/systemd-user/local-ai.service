@@ -1,0 +1,23 @@
+[Unit]
+Description=Local AI (llama.cpp Vulkan server)
+After=graphical-session.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/AI/local-ai
+Environment=LD_LIBRARY_PATH=%h/.local/lib/llama.cpp
+Environment=VK_DRIVER_FILES=/usr/share/vulkan/icd.d/radeon_icd.json
+ExecStart=%h/.local/bin/llama-server \
+    --model %h/.local/share/llama-models/qwen2.5-coder-7b-instruct-q4_k_m.gguf \
+    --alias qwen2.5-coder-7b \
+    --host 127.0.0.1 \
+    --port 8080 \
+    --n-gpu-layers 99 \
+    --ctx-size 8192 \
+    --threads 8 \
+    --threads-batch 8
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
