@@ -18,6 +18,7 @@ Git-backed snapshot of the TARDIS desktop configuration.
 - `config/fastfetch/` — fastfetch config and animated text T.A.R.D.I.S logo
 - `config/qt6ct/` — Qt appearance config
 - `config/sddm/` — TARDIS Gold login theme and SDDM selection override
+- `config/grub/` — TARDIS Gold boot theme and active GRUB default
 - `docs/` — research notes, local AI, Open WebUI and morning brief guides
 - `wallpapers/README.md` — wallpaper pair documentation
 - `state/wallpaper-current` — active wallpaper pair name

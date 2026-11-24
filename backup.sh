@@ -33,6 +33,7 @@ mkdir -p \
     "$REPO/config/fastfetch" \
     "$REPO/config/qt6ct" \
     "$REPO/config/sddm" \
+    "$REPO/config/grub" \
     "$REPO/config/opencode" \
     "$REPO/config/local-ai" \
     "$REPO/config/morning-brief" \
@@ -101,6 +102,10 @@ cp -a "$SRC/.config/qt6ct/qt6ct.conf" "$REPO/config/qt6ct/" 2>/dev/null || true
 # SDDM TARDIS Gold theme and selection override
 cp -a "$SRC/.local/share/sddm/themes/tardis-gold" "$REPO/config/sddm/" 2>/dev/null || true
 cp -a "/etc/sddm.conf.d/99-tardis.conf" "$REPO/config/sddm/sddm-99-tardis.conf" 2>/dev/null || true
+
+# GRUB TARDIS Gold theme and active GRUB default
+cp -a "$SRC/.local/share/grub/themes/tardis-gold" "$REPO/config/grub/" 2>/dev/null || true
+cp -a "/etc/default/grub" "$REPO/config/grub/grub-default" 2>/dev/null || true
 
 # Research/docs
 cp -a "$SRC/hyprland-desktop-shells.md" "$REPO/docs/" 2>/dev/null || true

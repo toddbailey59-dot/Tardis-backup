@@ -1,0 +1,60 @@
+# TARDIS Gold GRUB theme
+
+desktop-image: "background.png"
+
+message-font: "DejaVu Sans Mono Regular 14"
+message-color: "#f4e6c8"
+message-bg-color: "#07111f"
+
+terminal-font: "DejaVu Sans Mono Regular 12"
+
++ label {
+	top = 6%
+	left = 24%
+	width = 52%
+	height = 5%
+	text = "TARDIS ACCESS TERMINAL // SELECT DESTINATION TIMELINE"
+	align = "center"
+	font = "DejaVu Sans Mono Regular 12"
+	color = "#e5b64c"
+}
+
++ boot_menu {
+	left = 24%
+	top = 56%
+	width = 52%
+	height = 22%
+	item_font = "DejaVu Sans Mono Regular 18"
+	item_color = "#d8e3ef"
+	selected_item_font = "DejaVu Sans Mono Bold 18"
+	selected_item_color = "#ffd36e"
+	item_height = 30
+	item_padding = 10
+	item_spacing = 6
+	scrollbar = false
+}
+
++ progress_bar {
+	id = "__timeout__"
+	left = 24%
+	top = 84%
+	width = 52%
+	height = 24
+	font = "DejaVu Sans Mono Regular 12"
+	text_color = "#ffd36e"
+	fg_color = "#e5b64c"
+	bg_color = "#0a1729"
+	border_color = "#8a6a2f"
+	text = "@TIMEOUT_NOTIFICATION_LONG@"
+}
+
++ label {
+	top = 92%
+	left = 8%
+	width = 84%
+	height = 5%
+	text = "@KEYMAP_MIDDLE@"
+	align = "center"
+	font = "DejaVu Sans Mono Regular 12"
+	color = "#9fb2c8"
+}

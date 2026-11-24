@@ -1,0 +1,109 @@
+#!/bin/bash
+# Build, install, check, or restore the TARDIS Gold GRUB theme.
+set -euo pipefail
+
+INVOKER="${SUDO_USER:-${PKEXEC_UID:-$(id -un)}}"
+INVOKER_HOME="$(getent passwd "$INVOKER" | cut -d: -f6)"
+SRC="${INVOKER_HOME:-$HOME}/.local/share/grub/themes/tardis-gold"
+DST="/boot/grub/themes/tardis-gold"
+DEFAULT="/etc/default/grub"
+CFG="/boot/grub/grub.cfg"
+BACKUP="/etc/default/grub.tardis-pre-theme"
+
+usage() {
+    cat <<'EOF'
+Usage: tardis-grub {status|check|install|restore}
+
+  status    Show source, installed theme, and active GRUB_THEME setting
+  check     Verify the local theme assets are complete
+  install   Install system-wide, select it, and regenerate grub.cfg (sudo)
+  restore   Remove the theme selection and regenerate grub.cfg (sudo)
+EOF
+}
+
+check_theme() {
+    for f in theme.txt background.png mono-book-12.pf2 mono-book-14.pf2 mono-book-18.pf2 mono-bold-18.pf2 mono-bold-34.pf2; do
+        [ -f "$SRC/$f" ] || { echo "Missing theme file: $SRC/$f" >&2; return 1; }
+    done
+    echo "Theme assets OK: $SRC"
+}
+
+status() {
+    echo "Source theme: $SRC"
+    echo "Installed theme: $DST"
+    if [ -f "$DST/theme.txt" ]; then
+        echo "Installed theme found: yes"
+    else
+        echo "Installed theme found: no"
+    fi
+    echo "GRUB default: $DEFAULT"
+    grep -E '^[[:space:]]*#?[[:space:]]*GRUB_THEME=' "$DEFAULT" 2>/dev/null || echo "No GRUB_THEME line"
+    echo "Generated config: $CFG"
+    if grep -q 'grub/themes/tardis-gold/theme.txt' "$CFG" 2>/dev/null; then
+        echo "Generated config uses TARDIS Gold: yes"
+    else
+        echo "Generated config uses TARDIS Gold: no"
+    fi
+}
+
+install_theme() {
+    check_theme
+    [ -f "$BACKUP" ] || sudo cp -a "$DEFAULT" "$BACKUP"
+
+    sudo install -d -m 755 /boot/grub/themes
+    sudo install -d -m 755 "$DST"
+    # /boot may be a FAT boot partition; do not try to preserve doctor:doctor ownership.
+    sudo cp -R "$SRC/." "$DST/"
+
+    tmp="$(mktemp)"
+    trap 'rm -f "$tmp"' EXIT
+    awk -v theme="$DST/theme.txt" '
+        /^[[:space:]]*GRUB_THEME=/ {
+            print "GRUB_THEME=\"" theme "\""
+            seen = 1
+            next
+        }
+        /^[[:space:]]*#[[:space:]]*GRUB_THEME=/ {
+            print "GRUB_THEME=\"" theme "\""
+            seen = 1
+            next
+        }
+        { print }
+        END {
+            if (!seen) print "GRUB_THEME=\"" theme "\""
+        }
+    ' "$DEFAULT" > "$tmp"
+
+    sudo install -m 644 "$tmp" "$DEFAULT"
+    rm -f "$tmp"
+    trap - EXIT
+    sudo grub-mkconfig -o "$CFG"
+    echo "Installed TARDIS Gold GRUB theme. It will appear at the next boot."
+}
+
+restore_theme() {
+    tmp="$(mktemp)"
+    trap 'rm -f "$tmp"' EXIT
+    awk '
+        /^[[:space:]]*GRUB_THEME=/ {
+            print "#GRUB_THEME=\"/path/to/gfxtheme\""
+            next
+        }
+        { print }
+    ' "$DEFAULT" > "$tmp"
+
+    sudo install -m 644 "$tmp" "$DEFAULT"
+    rm -f "$tmp"
+    trap - EXIT
+    sudo grub-mkconfig -o "$CFG"
+    echo "Removed the TARDIS Gold GRUB theme selection. Original default saved at $BACKUP."
+}
+
+case "${1:-status}" in
+    status) status ;;
+    check) check_theme ;;
+    install) install_theme ;;
+    restore) restore_theme ;;
+    -h|--help|help) usage ;;
+    *) usage >&2; exit 2 ;;
+esac

@@ -1,0 +1,31 @@
+#!/bin/bash
+# Rebuild the TARDIS Gold GRUB theme fonts and background.
+set -euo pipefail
+
+THEME="$HOME/.local/share/grub/themes/tardis-gold"
+BG_SOURCE="$HOME/Pictures/wallpapers/pairs/space-arp142/panorama.jpg"
+FONT=/usr/share/fonts/TTF/DejaVuSansMono-Bold.ttf
+
+[ -f "$BG_SOURCE" ] || { echo "Missing source wallpaper: $BG_SOURCE" >&2; exit 1; }
+mkdir -p "$THEME"
+
+grub-mkfont -s 18 -o "$THEME/mono-book-18.pf2" /usr/share/fonts/TTF/DejaVuSansMono.ttf
+grub-mkfont -s 14 -o "$THEME/mono-book-14.pf2" /usr/share/fonts/TTF/DejaVuSansMono.ttf
+grub-mkfont -s 12 -o "$THEME/mono-book-12.pf2" /usr/share/fonts/TTF/DejaVuSansMono.ttf
+grub-mkfont -s 34 -o "$THEME/mono-bold-34.pf2" "$FONT"
+grub-mkfont -s 18 -o "$THEME/mono-bold-18.pf2" "$FONT"
+
+ffmpeg -hide_banner -loglevel error -y \
+    -i "$BG_SOURCE" \
+    -filter_complex "
+[0:v]scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,
+drawbox=x=0:y=0:w=iw:h=ih:color=0x06101f@0.76:t=fill,
+drawbox=x=54:y=54:w=iw-108:h=ih-108:color=0xe5b64c@0.55:t=3,
+drawtext=fontfile=$FONT:text='POLICE BOX':fontsize=26:fontcolor=0xe5b64c@0.72:x=(w-text_w)/2:y=145,
+drawtext=fontfile=$FONT:text='T.A.R.D.I.S':fontsize=210:fontcolor=0xe5b64c@0.18:x=(w-text_w)/2+6:y=208,
+drawtext=fontfile=$FONT:text='T.A.R.D.I.S':fontsize=210:fontcolor=0xffd36e@0.96:x=(w-text_w)/2:y=202:borderw=3:bordercolor=0x8a6a2f,
+drawbox=x=240:y=440:w=1440:h=3:color=0xe5b64c@0.75:t=fill,
+drawtext=fontfile=$FONT:text='EMERGENCY BOOT SEQUENCE // GALACTIC STANDARD':fontsize=22:fontcolor=0x9fb2c8@0.90:x=(w-text_w)/2:y=474[out]
+" -map '[out]' -frames:v 1 "$THEME/background.png"
+
+echo "Rebuilt TARDIS Gold GRUB theme in $THEME"
