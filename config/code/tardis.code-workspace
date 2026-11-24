@@ -1,0 +1,42 @@
+{
+  "folders": [
+    {
+      "name": "Code",
+      "path": "."
+    },
+    {
+      "name": "TARDIS Shell",
+      "path": "../.config/quickshell/tardis-shell"
+    },
+    {
+      "name": "Hyprland",
+      "path": "../.config/hypr"
+    },
+    {
+      "name": "Scripts",
+      "path": "../bin"
+    },
+    {
+      "name": "Wallpapers",
+      "path": "../Pictures/wallpapers"
+    }
+  ],
+  "settings": {
+    "search.exclude": {
+      "**/backup-*": true,
+      "**/node_modules": true,
+      "**/.git": true
+    },
+    "files.watcherExclude": {
+      "**/backup-*": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "sumneko.lua",
+      "theqtcompany.qt-qml",
+      "cutetee.qml"
+    ]
+  }
+}

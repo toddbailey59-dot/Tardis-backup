@@ -1,0 +1,43 @@
+SUPER + A        application launcher (TARDIS shell)
+SUPER + B        librewolf
+SUPER + C        close window
+SUPER + D        quick settings / OSD panel
+SUPER + E        thunar file manager
+SUPER + F        firefox
+SUPER + G        opencode (floating AI panel)
+SUPER + H        this keybinds overlay
+SUPER + I        JARVIS chat window
+SUPER + SHIFT+E  VS Code (TARDIS workspace)
+SUPER + SHIFT+H  hostcheck webapp -> workspace 3 (floating)
+SUPER + J        toggle split layout
+SUPER + K        power menu (lock/logout/sleep/reboot/shutdown)
+SUPER + L        lock screen (hyprlock)
+SUPER + M        launch both monitors (netcheck + hostcheck)
+SUPER + SHIFT+M  TARDIS shutdown (5s delay)
+SUPER + N        notification center
+SUPER + SHIFT+N  netcheck webapp -> workspace 2 (floating)
+SUPER + O        netcheck in default browser
+SUPER + P        pseudo-tile
+SUPER + Q        terminal (kitty)
+SUPER + S        scratchpad toggle (opens terminal if empty)
+SUPER + SHIFT+S  move window to scratchpad
+SUPER + T        alacritty terminal
+SUPER + TAB      workspace overview (live previews, cycle forward)
+SUPER + SHIFT+TAB workspace overview (cycle backward)
+SUPER + SHIFT+T  scratchpad terminal (kitty, hidden in special workspace)
+SUPER + SHIFT+V  clipboard history
+SUPER + V        toggle window floating
+SUPER + W        next wallpaper pair
+SUPER + SHIFT+W  wallpaper gallery (previews + scroll)
+SUPER + 1-0      switch workspace
+SUPER + SHIFT+1-0 move window to workspace
+SUPER + arrows   move focus
+SUPER + scroll   previous/next workspace
+SUPER + drag     move window (left mouse) / resize (right mouse)
+Print            screenshot (full)
+SHIFT+Print      screenshot (region)
+SUPER + Print    screenshot focused window
+SUPER + SHIFT+C  pick color anywhere (copies hex)
+SUPER + SHIFT+Q  close window
+Volume keys      volume up/down/mute
+Media keys       play/pause/next/prev

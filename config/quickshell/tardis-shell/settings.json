@@ -1,0 +1,22 @@
+{
+  "accent": "gold",
+  "barHeight": 34,
+  "cornerRadius": 12,
+  "barOpacity": 0.88,
+  "launcherColumns": 4,
+  "popupTimeout": 5000,
+  "clock24h": true,
+  "clockSeconds": false,
+  "showWindowTitle": true,
+  "showWorkspaceNumbers": true,
+  "dnd": false,
+  "animate": false,
+  "showSysStats": true,
+  "showWeather": true,
+  "weatherLat": 42.03339,
+  "weatherLon": -82.91654,
+  "weatherUnit": "C",
+  "weatherRefresh": 10,
+  "wallpaperSlideshow": true,
+  "wallpaperSlideshowMinutes": 5
+}

@@ -1,0 +1,17 @@
+#!/bin/sh
+set -eu
+
+. "$HOME/bin/wp-common.sh"
+
+pair=${1:-}
+if [ -z "$pair" ]; then
+    pair=$(current_pair)
+fi
+
+if [ -z "$pair" ] || [ ! -d "$WALL_ROOT/$pair" ]; then
+    echo "Unknown wallpaper pair: $pair" >&2
+    exit 1
+fi
+
+apply_pair "$pair"
+printf 'wallpaper: %s\n' "$pair"

@@ -1,0 +1,25 @@
+#!/bin/sh
+set -eu
+
+. "$HOME/bin/wp-common.sh"
+
+current=$(current_pair)
+found=0
+next=""
+
+for pair in $(list_pairs); do
+    if [ "$found" -eq 1 ]; then
+        next="$pair"
+        break
+    fi
+    if [ "$pair" = "$current" ]; then
+        found=1
+    fi
+done
+
+if [ -z "$next" ]; then
+    next=$(list_pairs | head -n 1)
+fi
+
+apply_pair "$next"
+printf 'wallpaper: %s\n' "$next"

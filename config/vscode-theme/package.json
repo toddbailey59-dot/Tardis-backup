@@ -1,0 +1,23 @@
+{
+  "name": "tardis-theme",
+  "displayName": "TARDIS Dark",
+  "description": "TARDIS blue-and-gold dark theme for Code - OSS.",
+  "version": "0.0.1",
+  "publisher": "doctor",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.138.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "TARDIS Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/tardis-color-theme.json"
+      }
+    ]
+  }
+}

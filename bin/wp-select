@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+. "$HOME/bin/wp-common.sh"
+
+choice=$(list_pairs | wofi --dmenu --prompt 'Wallpaper' --width 320 --lines 10) || exit 0
+[ -n "$choice" ] || exit 0
+
+apply_pair "$choice"
+printf 'wallpaper: %s\n' "$choice"
