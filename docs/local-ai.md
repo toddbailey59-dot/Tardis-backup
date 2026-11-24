@@ -80,3 +80,10 @@ Download GGUF files into:
 
 Then point `LOCAL_AI_MODEL` at one for `llama-chat`, or edit
 `~/.config/systemd/user/local-ai.service` to change the server model.
+
+## Front ends
+
+- OpenCode local provider and Open WebUI are documented in
+  `~/AI/open-webui/README.md`.
+- `SUPER + ALT + A` opens `llama-chat` in Kitty.
+- `SUPER + O` opens Open WebUI at `http://127.0.0.1:3000`.

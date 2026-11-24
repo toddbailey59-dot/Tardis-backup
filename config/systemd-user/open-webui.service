@@ -1,0 +1,18 @@
+[Unit]
+Description=Open WebUI (local ChatGPT-like page)
+After=local-ai.service
+
+[Service]
+Type=simple
+WorkingDirectory=%h/.local/share/open-webui
+Environment=OPENAI_API_BASE_URL=http://127.0.0.1:8080/v1
+Environment=OPENAI_API_KEY=local
+Environment=WEBUI_AUTH=false
+Environment=WEBUI_SECRET_KEY=fba6d8b43f222001f945fce4ad3ba668416bec8c1aa2eb81f45fdcf4697c79a7
+Environment=DATA_DIR=%h/.local/share/open-webui/data
+ExecStart=%h/.local/share/open-webui/venv/bin/open-webui serve --host 127.0.0.1 --port 3000
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

@@ -78,8 +78,9 @@ hl.bind(SUPER .. " + A", hl.dsp.exec_cmd("qs ipc -p /home/doctor/.config/quicksh
 hl.bind(SUPER .. " + F", hl.dsp.exec_cmd("firefox"))
 hl.bind(SUPER .. " + B", hl.dsp.exec_cmd("librewolf "))
 hl.bind(SUPER .. " + G", hl.dsp.exec_cmd("kitty --class ai -e opencode"))
+hl.bind(SUPER .. " + ALT + A", hl.dsp.exec_cmd("kitty --class ai-chat -e /home/doctor/.local/bin/llama-chat"))
 hl.bind(SUPER .. " + SHIFT + E", hl.dsp.exec_cmd("/home/doctor/.local/bin/code /home/doctor/Code/tardis.code-workspace"))
-hl.bind(SUPER .. " + O", hl.dsp.exec_cmd("xdg-open http://localhost:8080"))
+hl.bind(SUPER .. " + O", hl.dsp.exec_cmd("xdg-open http://127.0.0.1:3000"))
 
 -- system / theme
 hl.bind(SUPER .. " + H", hl.dsp.exec_cmd("qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis toggleHelp"))

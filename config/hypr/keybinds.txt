@@ -7,6 +7,7 @@ SUPER + F        firefox
 SUPER + G        opencode (floating AI panel)
 SUPER + H        this keybinds overlay
 SUPER + I        JARVIS chat window
+SUPER + ALT+A    local AI chat (llama-chat in Kitty)
 SUPER + SHIFT+E  VS Code (TARDIS workspace)
 SUPER + SHIFT+H  hostcheck webapp -> workspace 3 (floating)
 SUPER + J        toggle split layout
@@ -16,7 +17,7 @@ SUPER + M        launch both monitors (netcheck + hostcheck)
 SUPER + SHIFT+M  TARDIS shutdown (5s delay)
 SUPER + N        notification center
 SUPER + SHIFT+N  netcheck webapp -> workspace 2 (floating)
-SUPER + O        netcheck in default browser
+SUPER + O        local AI web UI (Open WebUI)
 SUPER + P        pseudo-tile
 SUPER + Q        terminal (kitty)
 SUPER + S        scratchpad toggle (opens terminal if empty)

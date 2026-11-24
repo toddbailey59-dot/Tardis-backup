@@ -28,6 +28,7 @@ The explicit `-p` path is required because the IPC calls also use it.
 | `SUPER + TAB` | Workspace overview, cycle forward |
 | `SUPER + SHIFT + TAB` | Workspace overview, cycle backward |
 | `SUPER + G` | Floating OpenCode terminal session |
+| `SUPER + ALT + A` | Local AI chat in Kitty (llama-chat) |
 | `SUPER + SHIFT + E` | VS Code (TARDIS workspace) |
 | `Print` / `SHIFT + Print` | Full / region screenshot |
 

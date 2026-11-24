@@ -1,0 +1,22 @@
+#!/bin/sh
+# Control the local Open WebUI service.
+set -eu
+
+SERVICE="open-webui.service"
+URL="http://127.0.0.1:3000"
+
+case "${1:-status}" in
+    start)   systemctl --user start "$SERVICE" ;;
+    stop)    systemctl --user stop "$SERVICE" ;;
+    restart) systemctl --user restart "$SERVICE" ;;
+    enable)  systemctl --user enable "$SERVICE" ;;
+    disable) systemctl --user disable "$SERVICE" ;;
+    status)  systemctl --user status "$SERVICE" --no-pager 2>&1 || true ;;
+    log)     journalctl --user -u "$SERVICE" -f ;;
+    open)    xdg-open "$URL" ;;
+    url)     printf '%s\n' "$URL" ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|enable|disable|status|log|open|url}" >&2
+        exit 2
+        ;;
+esac
