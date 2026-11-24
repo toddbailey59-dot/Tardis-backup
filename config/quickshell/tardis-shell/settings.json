@@ -3,7 +3,7 @@
   "barHeight": 34,
   "cornerRadius": 12,
   "barOpacity": 0.88,
-  "launcherColumns": 4,
+  "launcherColumns": 6,
   "popupTimeout": 5000,
   "clock24h": true,
   "clockSeconds": false,

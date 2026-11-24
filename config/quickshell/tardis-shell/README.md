@@ -38,6 +38,20 @@ The explicit `-p` path is required because the IPC calls also use it.
 All other binds remain unchanged in `~/.config/hypr/keybinds.txt` and
 `~/.config/hypr/doctor.lua`.
 
+## Application icons
+
+The launcher uses Qt's `hicolor` theme. Your user-level
+`~/.local/share/icons/hicolor/index.theme` inherits `Papirus-Dark`, so app
+icons are complete and consistent. To install or refresh them:
+
+```sh
+~/bin/tardis-icons install
+~/bin/tardis-icons status
+```
+
+The icon theme data is large and is not stored in the git backup; the installer
+script and Qt appearance config are.
+
 ## Settings
 
 GUI: click the gear in the top bar, or use the `SETTINGS` button in quick
@@ -59,12 +73,11 @@ Settings are stored in `settings.json` next to this README. Available keys:
 `weatherLat`, `weatherLon`, `weatherUnit`, `weatherRefresh`,
 `wallpaperSlideshow`, `wallpaperSlideshowMinutes`.
 
-Weather defaults to Detroit (`42.3314, -83.0458`) in °F because the machine
-timezone is `US/Michigan`. Change it with:
+Weather is set to Harrow, Ontario (`42.03339, -82.91654`) in °C. Change it with:
 
 ```sh
-qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis settingsSet weatherLat 42.3314
-qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis settingsSet weatherLon -83.0458
+qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis settingsSet weatherLat 42.03339
+qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis settingsSet weatherLon -82.91654
 qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis settingsSet weatherUnit C
 qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis reloadShell
 ```

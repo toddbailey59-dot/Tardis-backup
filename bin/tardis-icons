@@ -1,0 +1,56 @@
+#!/bin/bash
+# Install/refresh the Papirus icon themes used by the TARDIS shell.
+# The themes live in ~/.local/share/icons and are not part of the git backup;
+# this script is backed up instead so they can be restored on a fresh machine.
+set -euo pipefail
+
+TAG="20260801"
+URL="https://github.com/PapirusDevelopmentTeam/papirus-icon-theme/archive/refs/tags/${TAG}.tar.gz"
+DEST="$HOME/.local/share/icons"
+WORK="${TMPDIR:-/tmp}/tardis-icons-$$"
+
+usage() {
+    echo "Usage: tardis-icons {install|status}" >&2
+    exit 1
+}
+
+install_icons() {
+    mkdir -p "$DEST" "$DEST/hicolor"
+    if [ ! -d "$DEST/Papirus" ] || [ ! -d "$DEST/Papirus-Dark" ]; then
+        echo "Downloading Papirus ${TAG}…"
+        mkdir -p "$WORK"
+        curl -fL --max-time 300 "$URL" -o "$WORK/icons.tar.gz"
+        tar -xzf "$WORK/icons.tar.gz" -C "$DEST" --strip-components=1 \
+            "papirus-icon-theme-${TAG}/Papirus" \
+            "papirus-icon-theme-${TAG}/Papirus-Dark"
+        rm -rf "$WORK"
+    fi
+
+    # Quickshell resolves icons through hicolor. Inheriting Papirus-Dark gives
+    # every Qt app the full themed icon set without a platform-theme plugin.
+    cp /usr/share/icons/hicolor/index.theme "$DEST/hicolor/index.theme"
+    python3 - <<'PY'
+from pathlib import Path
+p = Path.home() / '.local/share/icons/hicolor/index.theme'
+s = p.read_text()
+if 'Inherits=Papirus-Dark' not in s:
+    s = s.replace('Hidden=true\n', 'Hidden=true\nInherits=Papirus-Dark\n', 1)
+p.write_text(s)
+PY
+
+    gtk-update-icon-cache -f -q "$DEST/Papirus" 2>/dev/null || true
+    gtk-update-icon-cache -f -q "$DEST/Papirus-Dark" 2>/dev/null || true
+    echo "Papirus icons installed; hicolor now inherits Papirus-Dark."
+}
+
+show_status() {
+    printf 'Papirus:      %s\n' "$([ -d "$DEST/Papirus" ] && echo installed || echo missing)"
+    printf 'Papirus-Dark: %s\n' "$([ -d "$DEST/Papirus-Dark" ] && echo installed || echo missing)"
+    printf 'hicolor inherits: %s\n' "$(grep -m1 '^Inherits=' "$DEST/hicolor/index.theme" 2>/dev/null || echo none)"
+}
+
+case "${1:-install}" in
+    install) install_icons ;;
+    status)  show_status ;;
+    *)       usage ;;
+esac
