@@ -2,7 +2,7 @@
 set -euo pipefail
 
 CRED_FILE="$HOME/.config/git/credentials"
-DEFAULT_USER="toddbailey59-dot"
+DEFAULT_USER="newlife50"
 
 printf 'GitHub username [%s]: ' "$DEFAULT_USER"
 read -r user
