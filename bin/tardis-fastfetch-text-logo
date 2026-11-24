@@ -40,14 +40,30 @@ def frame(active: int | None) -> str:
             text += f"{DIM}.{RESET}"
             marks += " "
 
-    inner_width = len("  T.A.R.D.I.S  ")
-    indent = " " * ((WIDTH - (inner_width + 2)) // 2)
+    box_width = 34
+    inner = box_width - 2
+    indent = " " * ((WIDTH - box_width) // 2)
     mark_indent = " " * ((WIDTH - (len(LETTERS) * 2 - 1)) // 2)
 
+    label = " POLICE BOX "
+    label_left = (inner - len(label)) // 2
+    label_right = inner - len(label) - label_left
+    top = "╔" + "═" * label_left + label + "═" * label_right + "╗"
+
+    plain_text = "T.A.R.D.I.S"
+    text_left = (inner - len(plain_text)) // 2
+    text_right = inner - len(plain_text) - text_left
+
+    bottom = "╚" + "═" * inner + "╝"
+
     rows = [""] * HEIGHT
-    rows[7] = fit(indent + DIM + "╭" + "─" * inner_width + "╮" + RESET)
-    rows[8] = fit(indent + DIM + "║  " + RESET + text + DIM + "  ║" + RESET)
-    rows[9] = fit(indent + DIM + "╰" + "─" * inner_width + "╯" + RESET)
+    rows[7] = fit(indent + GOLD + top + RESET)
+    rows[8] = fit(
+        indent + GOLD + "║" + RESET
+        + " " * text_left + text + " " * text_right
+        + GOLD + "║" + RESET
+    )
+    rows[9] = fit(indent + GOLD + bottom + RESET)
     rows[10] = fit(mark_indent + marks)
     return "\n".join(rows) + "\n"
 

@@ -1,9 +1,9 @@
 # TARDIS fastfetch logo
 
 `~/bin/fastfetch` replaces a plain `fastfetch` call in Kitty with an animated
-text logo that spells out `T.A.R.D.I.S`. It uses only terminal text and cursor
-movement — no Kitty graphics protocol, no image transmissions, and no
-`i=…;OK` replies.
+text logo that spells out `T.A.R.D.I.S` inside a gold `POLICE BOX` frame. It
+uses only terminal text and cursor movement — no Kitty graphics protocol, no
+image transmissions, and no `i=…;OK` replies.
 
 The system information is printed once. Each frame is redrawn in place while
 the rest of the screen is left alone, so there is no per-frame flicker. The
