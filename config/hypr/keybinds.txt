@@ -20,6 +20,7 @@ SUPER + SHIFT+N  netcheck webapp -> workspace 2 (floating)
 SUPER + O        local AI web UI (Open WebUI)
 SUPER + P        pseudo-tile
 SUPER + Q        terminal (kitty)
+SUPER + R        spoken TARDIS morning brief
 SUPER + S        scratchpad toggle (opens terminal if empty)
 SUPER + SHIFT+S  move window to scratchpad
 SUPER + T        alacritty terminal

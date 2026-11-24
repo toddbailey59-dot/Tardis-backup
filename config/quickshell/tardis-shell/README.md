@@ -31,6 +31,7 @@ The explicit `-p` path is required because the IPC calls also use it.
 | `SUPER + ALT + A` | Local AI chat in Kitty (llama-chat) |
 | `SUPER + O` | Open WebUI in the default browser |
 | `SUPER + C` | TARDIS calendar in the default browser |
+| `SUPER + R` | Spoken TARDIS morning brief |
 | `SUPER + SHIFT + E` | VS Code (TARDIS workspace) |
 | `Print` / `SHIFT + Print` | Full / region screenshot |
 

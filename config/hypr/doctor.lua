@@ -82,6 +82,7 @@ hl.bind(SUPER .. " + ALT + A", hl.dsp.exec_cmd("kitty --class ai-chat -e /home/d
 hl.bind(SUPER .. " + SHIFT + E", hl.dsp.exec_cmd("/home/doctor/.local/bin/code /home/doctor/Code/tardis.code-workspace"))
 hl.bind(SUPER .. " + O", hl.dsp.exec_cmd("xdg-open http://127.0.0.1:3000"))
 hl.bind(SUPER .. " + C", hl.dsp.exec_cmd("xdg-open http://127.0.0.1:3010"))
+hl.bind(SUPER .. " + R", hl.dsp.exec_cmd("/home/doctor/.local/bin/morning-brief run --speak"))
 
 -- system / theme
 hl.bind(SUPER .. " + H", hl.dsp.exec_cmd("qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis toggleHelp"))

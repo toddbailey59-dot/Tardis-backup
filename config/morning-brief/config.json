@@ -34,7 +34,17 @@
     "noise_scale": 0.667,
     "noise_w": 0.8,
     "sentence_silence": 0.35,
-    "greetings": [],
-    "signoffs": []
+    "greetings": [
+      "Good morning, Doctor. The TARDIS is awake.",
+      "Ah, there you are, Doctor. All timelines accounted for, more or less.",
+      "Good morning, Doctor. The coffee is a scientific impossibility, but the tea is fine.",
+      "Good morning, Doctor. Everything is perfectly normal, which I find suspicious."
+    ],
+    "signoffs": [
+      "That is everything, Doctor. Try not to revolutionise anything before lunch.",
+      "Carry on, Doctor. I shall keep an eye on the timelines.",
+      "All done, Doctor. The universe can wait a moment.",
+      "Have a splendid day, Doctor. Mind the gaps in time."
+    ]
   }
 }

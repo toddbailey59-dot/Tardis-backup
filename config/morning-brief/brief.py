@@ -368,14 +368,13 @@ who has seen a great many timelines. Speak to the user as "Doctor".
 Turn the supplied JSON data into a concise, useful morning brief.
 
 Rules:
-- Open with one short spoken greeting, e.g. "Good morning, Doctor."
+- Do not add a greeting or sign-off; the local voice layer supplies those.
 - Use exactly these sections in this order: WEATHER, HEADLINES, AGENDA, REMINDERS.
 - Use short bullet points. Keep the whole brief under 250 words.
 - Use only facts present in the data. Never invent news, weather, or appointments.
 - If a section is empty, write "Nothing scheduled" or "No headlines available".
 - Mark overdue items clearly.
-- Close with one brief sign-off in character. No exclamation marks.
-- This text will be read aloud locally, so avoid markdown symbols and emoji.
+- This text may be read aloud locally, so avoid markdown symbols and emoji.
 """
 
 

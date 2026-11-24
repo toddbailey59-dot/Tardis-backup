@@ -67,7 +67,8 @@ Modal {
                 HelpRow { width: parent.width; keys: "SUPER + SHIFT + E"; description: "VS Code (TARDIS workspace)"; settings: helpPanel.settings; alternate: true }
                 HelpRow { width: parent.width; keys: "SUPER + O"; description: "Local AI web UI (Open WebUI)"; settings: helpPanel.settings }
                 HelpRow { width: parent.width; keys: "SUPER + C"; description: "TARDIS calendar"; settings: helpPanel.settings; alternate: true }
-                HelpRow { width: parent.width; keys: "SUPER + SHIFT + N"; description: "netcheck → workspace 2"; settings: helpPanel.settings }
+                HelpRow { width: parent.width; keys: "SUPER + R"; description: "Spoken morning brief"; settings: helpPanel.settings }
+                HelpRow { width: parent.width; keys: "SUPER + SHIFT + N"; description: "netcheck → workspace 2"; settings: helpPanel.settings; alternate: true }
                 HelpRow { width: parent.width; keys: "SUPER + SHIFT + H"; description: "hostcheck → workspace 3"; settings: helpPanel.settings }
                 HelpRow { width: parent.width; keys: "SUPER + M"; description: "Both monitor webapps"; settings: helpPanel.settings; alternate: true }
             }

@@ -30,6 +30,8 @@ Example sources:
 ~/.local/bin/morning-brief collect             # raw JSON data
 ```
 
+Press `SUPER + R` for a spoken brief on demand.
+
 A systemd user timer runs the full brief daily at 07:00:
 
 ```sh
@@ -106,6 +108,6 @@ requests into OpenAI-style `tool_calls`. See `~/AI/local-ai/README.md`.
 ~/.local/bin/tardis-voice "Standing by" --no-play --output /tmp/standby.wav
 ```
 
-The persona is in the brief's system prompt, and optional spoken greetings and
-sign-offs can be added in `config.json` under `voice.greetings` and
-`voice.signoffs`. The voice is fully local.
+The persona is in the brief's system prompt. Spoken greetings and sign-offs are
+chosen randomly from `voice.greetings` and `voice.signoffs` in `config.json`,
+so the LLM does not duplicate them. The voice is fully local.
