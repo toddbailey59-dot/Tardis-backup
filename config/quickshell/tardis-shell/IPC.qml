@@ -16,6 +16,7 @@ QtObject {
         function toggleChat(): void { shell.toggleChat() }
         function toggleSettings(): void { shell.toggleSettings() }
         function toggleHelp(): void { shell.toggleHelp() }
+        function toggleWallpaperGallery(): void { shell.toggleGallery() }
         function overviewCycle(): void { shell.overviewCycle(1) }
         function overviewCycleBack(): void { shell.overviewCycle(-1) }
         function closeOverlays(): void { shell.closeOverlays() }

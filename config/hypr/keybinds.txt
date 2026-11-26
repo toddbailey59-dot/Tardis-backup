@@ -1,6 +1,6 @@
 SUPER + A        application launcher (TARDIS shell)
 SUPER + B        librewolf
-SUPER + C        TARDIS calendar (appointments and reminders)
+SUPER + C        close window
 SUPER + D        quick settings / OSD panel
 SUPER + E        thunar file manager
 SUPER + F        firefox
@@ -8,15 +8,13 @@ SUPER + G        opencode (floating AI panel)
 SUPER + H        this keybinds overlay
 SUPER + I        JARVIS chat window
 SUPER + ALT+A    local AI chat (llama-chat in Kitty)
+SUPER + ALT+C    TARDIS calendar (appointments and reminders)
 SUPER + SHIFT+E  VS Code (TARDIS workspace)
-SUPER + SHIFT+H  hostcheck webapp -> workspace 3 (floating)
 SUPER + J        toggle split layout
 SUPER + K        power menu (lock/logout/sleep/reboot/shutdown)
 SUPER + L        lock screen (hyprlock)
-SUPER + M        launch both monitors (netcheck + hostcheck)
 SUPER + SHIFT+M  TARDIS shutdown (5s delay)
 SUPER + N        notification center
-SUPER + SHIFT+N  netcheck webapp -> workspace 2 (floating)
 SUPER + O        local AI web UI (Open WebUI)
 SUPER + P        pseudo-tile
 SUPER + Q        terminal (kitty)
@@ -30,7 +28,7 @@ SUPER + SHIFT+T  scratchpad terminal (kitty, hidden in special workspace)
 SUPER + SHIFT+V  clipboard history
 SUPER + V        toggle window floating
 SUPER + W        next wallpaper pair
-SUPER + SHIFT+W  wallpaper gallery (previews + scroll)
+SUPER + SHIFT+W  wallpaper gallery (previews + arrows/click)
 SUPER + 1-0      switch workspace
 SUPER + SHIFT+1-0 move window to workspace
 SUPER + arrows   move focus

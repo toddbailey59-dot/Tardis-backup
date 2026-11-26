@@ -33,6 +33,7 @@ ShellRoot {
     property bool settingsOpen: false
     property bool overviewOpen: false
     property bool helpOpen: false
+    property bool galleryOpen: false
     property int overviewIndex: 0
     property bool volumeNotifyReady: false
 
@@ -155,6 +156,10 @@ ShellRoot {
         shell: root
     }
 
+    WallpaperGallery {
+        shell: root
+    }
+
     function showOnly(name) {
         launcherOpen = name === "launcher"
         powerOpen = name === "power"
@@ -165,6 +170,7 @@ ShellRoot {
         settingsOpen = name === "settings"
         overviewOpen = name === "overview"
         helpOpen = name === "help"
+        galleryOpen = name === "gallery"
     }
 
     function closeOverlays() { showOnly("") }
@@ -176,6 +182,7 @@ ShellRoot {
     function toggleChat() { showOnly(chatOpen ? "" : "chat") }
     function toggleSettings() { showOnly(settingsOpen ? "" : "settings") }
     function toggleHelp() { showOnly(helpOpen ? "" : "help") }
+    function toggleGallery() { showOnly(galleryOpen ? "" : "gallery") }
     function closeLauncher() { launcherOpen = false }
     function closePower() { powerOpen = false }
     function closeNotifications() { notificationsOpen = false }
@@ -185,6 +192,7 @@ ShellRoot {
     function closeSettings() { settingsOpen = false }
     function closeOverview() { overviewOpen = false }
     function closeHelp() { helpOpen = false }
+    function closeGallery() { galleryOpen = false }
     function openSettings() { showOnly("settings") }
     function openNotifications() { showOnly("notifications") }
 

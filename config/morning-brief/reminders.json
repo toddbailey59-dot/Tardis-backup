@@ -1,3 +1,24 @@
 {
-  "items": []
+  "items": [
+    {
+      "id": "8afe9ced",
+      "kind": "appointment",
+      "text": "Doctor",
+      "due": "2026-12-18T10:00:00",
+      "created": "2026-11-24T10:48:21",
+      "done": false,
+      "tags": [
+        "doctor..You know the address"
+      ]
+    },
+    {
+      "id": "c5b1c21a",
+      "kind": "appointment",
+      "text": "Coffee with Nick",
+      "due": "2026-12-18T12:00:00",
+      "created": "2026-11-24T10:48:47",
+      "done": false,
+      "tags": []
+    }
+  ]
 }

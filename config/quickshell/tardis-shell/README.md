@@ -104,6 +104,7 @@ qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis statsInfo
 qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis statsRefresh
 qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis wallpaperNext
 qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis wallpaperInfo
+qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis toggleWallpaperGallery
 ```
 
 ## Notes
@@ -112,6 +113,8 @@ qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis wallpaperInfo
 - The shell owns `org.freedesktop.Notifications`; dunst is killed at startup.
 - Volume/mute changes raise a brief notification (suppressed when DND is on).
 - Live workspace previews use `ScreencopyView`.
+- The wallpaper gallery enumerates pairs with `wallpapers.sh` and applies the
+  selected pair through `~/bin/wp-apply` (dual-monitor, one IPC call each).
 - The two icon warnings for `applications-system` and
   `preferences-system-network` come from missing icon-theme entries and are
   cosmetic.

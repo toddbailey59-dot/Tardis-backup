@@ -17,7 +17,7 @@ hl.config({
 hl.config({
     general = {
         gaps_in      = 2,
-        gaps_out     = 8,
+        gaps_out     = 2,
         border_size  = 3,
         col = {
             active_border   = { colors = { blue, gold }, angle = 45 },
@@ -70,7 +70,7 @@ local SUPER = "SUPER"
 
 -- wallpaper switcher
 hl.bind(SUPER .. " + W", hl.dsp.exec_cmd("sh ~/bin/wp-next"))
-hl.bind(SUPER .. " + SHIFT + W", hl.dsp.exec_cmd("sh ~/bin/wp-select"))
+hl.bind(SUPER .. " + SHIFT + W", hl.dsp.exec_cmd("qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis toggleWallpaperGallery"))
 
 -- extra terminals / apps
 hl.bind(SUPER .. " + T", hl.dsp.exec_cmd("alacritty"))
@@ -81,7 +81,7 @@ hl.bind(SUPER .. " + G", hl.dsp.exec_cmd("kitty --class ai -e opencode"))
 hl.bind(SUPER .. " + ALT + A", hl.dsp.exec_cmd("kitty --class ai-chat -e /home/doctor/.local/bin/llama-chat"))
 hl.bind(SUPER .. " + SHIFT + E", hl.dsp.exec_cmd("/home/doctor/.local/bin/code /home/doctor/Code/tardis.code-workspace"))
 hl.bind(SUPER .. " + O", hl.dsp.exec_cmd("xdg-open http://127.0.0.1:3000"))
-hl.bind(SUPER .. " + C", hl.dsp.exec_cmd("xdg-open http://127.0.0.1:3010"))
+hl.bind(SUPER .. " + ALT + C", hl.dsp.exec_cmd("xdg-open http://127.0.0.1:3010"))
 hl.bind(SUPER .. " + R", hl.dsp.exec_cmd("/home/doctor/.local/bin/morning-brief run --speak"))
 
 -- system / theme
@@ -146,28 +146,5 @@ hl.window_rule({
     match = { class = "^spotify$" },
 })
 
--- ---------- webapp monitors (Firefox) ----------
--- Firefox maps the window as "Mozilla Firefox" and only sets the real page
--- title afterwards, so static title window rules never match. React to the
--- title event and float/move/resize the window once the dashboard title lands.
-local function place_webapp(w, ws)
-    hl.dispatch(hl.dsp.window.float({ action = "enable", window = w }))
-    hl.dispatch(hl.dsp.window.resize({ x = 1400, y = 900, window = w }))
-    hl.dispatch(hl.dsp.window.move({ workspace = ws, window = w }))
-    hl.dispatch(hl.dsp.window.center({ window = w }))
-end
 
-hl.on("window.title", function(w)
-    if w == nil then return end
-    local title = w.title or ""
-    if title:match("[Oo]utage recovery") then
-        place_webapp(w, 2)
-    elseif title:match("[Hh]ost check") then
-        place_webapp(w, 3)
-    end
-end)
 
--- Launch monitors
-hl.bind(SUPER .. " + SHIFT + N", hl.dsp.exec_cmd("~/bin/launch-netcheck"))
-hl.bind(SUPER .. " + SHIFT + H", hl.dsp.exec_cmd("~/bin/launch-hostcheck"))
-hl.bind(SUPER .. " + M",       hl.dsp.exec_cmd("~/bin/launch-monitors"))
