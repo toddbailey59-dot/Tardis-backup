@@ -110,6 +110,9 @@ qs ipc -p /home/doctor/.config/quickshell/tardis-shell call tardis toggleWallpap
 ## Notes
 
 - Bars are created per monitor; workspace buttons are filtered to that monitor.
+- Hovering a bar widget (workspace, title, weather, stats, audio, notifications,
+  clock, gear) shows a pill-shaped tooltip just below the bar with details about
+  that indicator.
 - The shell owns `org.freedesktop.Notifications`; dunst is killed at startup.
 - Volume/mute changes raise a brief notification (suppressed when DND is on).
 - Live workspace previews use `ScreencopyView`.
