@@ -133,10 +133,12 @@ else
 fi
 
 if [ "$PUSH" -eq 1 ]; then
-    if git remote get-url origin >/dev/null 2>&1; then
-        git push
-    else
-        echo "No origin remote configured." >&2
-        exit 1
-    fi
+    for remote in origin rassilon; do
+        if ! git remote get-url "$remote" >/dev/null 2>&1; then
+            echo "Missing git remote: $remote" >&2
+            exit 1
+        fi
+    done
+    echo "Pushing to GitHub and Rassilon..."
+    git push
 fi
