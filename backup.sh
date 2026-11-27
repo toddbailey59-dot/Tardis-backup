@@ -133,12 +133,12 @@ else
 fi
 
 if [ "$PUSH" -eq 1 ]; then
-    for remote in origin rassilon; do
+    for remote in origin rassilon local; do
         if ! git remote get-url "$remote" >/dev/null 2>&1; then
             echo "Missing git remote: $remote" >&2
             exit 1
         fi
     done
-    echo "Pushing to GitHub and Rassilon..."
+    echo "Pushing to GitHub, Rassilon and the local mirror..."
     git push
 fi

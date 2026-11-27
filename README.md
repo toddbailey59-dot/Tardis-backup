@@ -35,7 +35,7 @@ Refresh the snapshot and commit:
 ~/tardis-backup/backup.sh
 ```
 
-Commit and push to GitHub and the Rassilon mirror:
+Commit and push to GitHub, Rassilon and the local mirror:
 
 ```sh
 ~/tardis-backup/backup.sh "update bar" --push
@@ -49,11 +49,14 @@ git -C ~/tardis-backup push
 
 ## Remotes
 
-- `origin` fetches from GitHub and pushes to both GitHub and Rassilon
-  (two `remote.origin.pushurl` entries).
+- `origin` fetches from GitHub and pushes to GitHub, Rassilon and the local
+  mirror (three `remote.origin.pushurl` entries, in that order).
 - `rassilon` is the SSH bare mirror at `rassilon:tardis-backup.git`
   (10.13.13.6, `~/tardis-backup.git`). Use `git push rassilon` for a
   Rassilon-only push.
+- `local` is a bare mirror on this machine at
+  `/home/doctor/backups/tardis-backup.git`. Use `git push local` for a
+  local-only push.
 
 ## GitHub setup
 
