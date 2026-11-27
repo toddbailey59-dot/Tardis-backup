@@ -133,7 +133,7 @@ else
 fi
 
 if [ "$PUSH" -eq 1 ]; then
-    for remote in origin rassilon local; do
+    for remote in origin rassilon local usb; do
         if ! git remote get-url "$remote" >/dev/null 2>&1; then
             echo "Missing git remote: $remote" >&2
             exit 1
@@ -141,4 +141,12 @@ if [ "$PUSH" -eq 1 ]; then
     done
     echo "Pushing to GitHub, Rassilon and the local mirror..."
     git push
+
+    USB_REPO=$(git remote get-url usb)
+    if [ -d "$USB_REPO" ]; then
+        echo "Pushing to USB mirror..."
+        git push usb
+    else
+        echo "USB mirror not mounted; skipped."
+    fi
 fi

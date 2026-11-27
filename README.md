@@ -35,13 +35,15 @@ Refresh the snapshot and commit:
 ~/tardis-backup/backup.sh
 ```
 
-Commit and push to GitHub, Rassilon and the local mirror:
+Commit and push to GitHub, Rassilon, the local mirror and (when mounted) the USB mirror:
 
 ```sh
 ~/tardis-backup/backup.sh "update bar" --push
 ```
 
-Or push the latest commit manually (one push updates both destinations):
+Or push the latest commit manually (one push updates GitHub, Rassilon and the
+local mirror; add `git -C ~/tardis-backup push usb` when the USB drive is
+mounted):
 
 ```sh
 git -C ~/tardis-backup push
@@ -57,6 +59,10 @@ git -C ~/tardis-backup push
 - `local` is a bare mirror on this machine at
   `/home/doctor/backups/tardis-backup.git`. Use `git push local` for a
   local-only push.
+- `usb` is a bare mirror on the KINGSTON drive at
+  `/run/media/doctor/KINGSTON/Tardis-Stuff/tardis-backup.git`. It is pushed
+  only when the drive is mounted; `backup.sh --push` handles this
+  automatically. Use `git push usb` for a USB-only push.
 
 ## GitHub setup
 
